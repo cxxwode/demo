@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-11-21 14:47:58 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="cn.sh.sbl.hotel.beans.MenuFilm" table="menu_film" catalog="demo">
+        <comment>the menu film table</comment>
+        <composite-id name="id" class="cn.sh.sbl.hotel.beans.MenuFilmId">
+            <key-property name="menuId" type="int">
+                <column name="menu_id" />
+            </key-property>
+            <key-property name="filmId" type="string">
+                <column name="film_id" length="20" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="menu" class="cn.sh.sbl.hotel.beans.Menu" update="false" insert="false" fetch="select">
+            <column name="menu_id" not-null="true">
+                <comment>The id of the menu</comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="film" class="cn.sh.sbl.hotel.beans.Film" update="false" insert="false" fetch="select">
+            <column name="film_id" length="20" not-null="true">
+                <comment>The id of the film</comment>
+            </column>
+        </many-to-one>
+        <property name="displayOrder" type="java.lang.Integer">
+            <column name="display_order">
+                <comment>The display film order of the menu</comment>
+            </column>
+        </property>
+        <property name="lastUpdate" type="timestamp">
+            <column name="last_update" length="19" not-null="true">
+                <comment>The last update time of the menu film</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

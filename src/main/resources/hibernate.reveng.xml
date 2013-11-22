@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-reverse-engineering-3.0.dtd" >
+<hibernate-reverse-engineering>
+  <table-filter match-catalog="demo" match-name="actor"/>
+  <table-filter match-catalog="demo" match-name="category"/>
+  <table-filter match-catalog="demo" match-name="director"/>
+  <table-filter match-catalog="demo" match-name="file"/>
+  <table-filter match-catalog="demo" match-name="film"/>
+  <table-filter match-catalog="demo" match-name="film_actor"/>
+  <table-filter match-catalog="demo" match-name="film_director"/>
+  <table-filter match-catalog="demo" match-name="film_genre"/>
+  <table-filter match-catalog="demo" match-name="film_language"/>
+  <table-filter match-catalog="demo" match-name="menu"/>
+  <table-filter match-catalog="demo" match-name="menu_film"/>
+</hibernate-reverse-engineering>

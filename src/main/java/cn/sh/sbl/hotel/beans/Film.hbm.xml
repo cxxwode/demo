@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-11-21 14:47:58 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="cn.sh.sbl.hotel.beans.Film" table="film" catalog="demo">
+        <comment>the film table</comment>
+        <id name="id" type="string">
+            <column name="id" length="20" />
+            <generator class="assigned" />
+        </id>
+        <property name="title" type="string">
+            <column name="title">
+                <comment>The title of the film</comment>
+            </column>
+        </property>
+        <property name="ratings" type="string">
+            <column name="ratings" length="45">
+                <comment>The ratings of the film</comment>
+            </column>
+        </property>
+        <property name="releaseYear" type="date">
+            <column name="release_year" length="0">
+                <comment>The release year of the film</comment>
+            </column>
+        </property>
+        <property name="country" type="string">
+            <column name="country" length="45">
+                <comment>The country of the film</comment>
+            </column>
+        </property>
+        <property name="length" type="java.lang.Short">
+            <column name="length">
+                <comment>The length of the film (unit: min)</comment>
+            </column>
+        </property>
+        <property name="lastUpdate" type="timestamp">
+            <column name="last_update" length="19" not-null="true">
+                <comment>The last update time of the film</comment>
+            </column>
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="65535">
+                <comment>The description of the film</comment>
+            </column>
+        </property>
+        <property name="remark" type="string">
+            <column name="remark">
+                <comment>The remark of the film</comment>
+            </column>
+        </property>
+        <set name="files" table="file" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="film_id" length="20" not-null="true">
+                    <comment>The id of the film</comment>
+                </column>
+            </key>
+            <one-to-many class="cn.sh.sbl.hotel.beans.File" />
+        </set>
+        <set name="menuFilms" table="menu_film" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="film_id" length="20" not-null="true">
+                    <comment>The id of the film</comment>
+                </column>
+            </key>
+            <one-to-many class="cn.sh.sbl.hotel.beans.MenuFilm" />
+        </set>
+        <set name="categories" table="film_genre" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="film_id" length="20" not-null="true">
+                    <comment>The id of the film</comment>
+                </column>
+            </key>
+            <many-to-many entity-name="cn.sh.sbl.hotel.beans.Category">
+                <column name="category_genre" not-null="true">
+                    <comment>The genre of the films</comment>
+                </column>
+            </many-to-many>
+        </set>
+        <set name="categories_1" table="film_language" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="film_id" length="20" not-null="true">
+                    <comment>The id of the film</comment>
+                </column>
+            </key>
+            <many-to-many entity-name="cn.sh.sbl.hotel.beans.Category">
+                <column name="category_language" not-null="true">
+                    <comment>The language of the film</comment>
+                </column>
+            </many-to-many>
+        </set>
+        <set name="directors" table="film_director" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="film_id" length="20" not-null="true">
+                    <comment>The id of the film</comment>
+                </column>
+            </key>
+            <many-to-many entity-name="cn.sh.sbl.hotel.beans.Director">
+                <column name="director_id" not-null="true">
+                    <comment>The id of the directory</comment>
+                </column>
+            </many-to-many>
+        </set>
+        <set name="actors" table="film_actor" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="film_id" length="20" not-null="true">
+                    <comment>The id of the film</comment>
+                </column>
+            </key>
+            <many-to-many entity-name="cn.sh.sbl.hotel.beans.Actor">
+                <column name="actor_id" not-null="true">
+                    <comment>The id of the actor</comment>
+                </column>
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>
