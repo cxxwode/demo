@@ -5,7 +5,7 @@
  * Create By: bunco
  * Create Date: 2013-11-21 下午3:35:31
  */
-package service;
+package junit.test.service;
 
 import static org.junit.Assert.*;
 
@@ -59,5 +59,4 @@ public class ActorTest {
 		}
 		assertTrue(0 < list.size());
 	}
-
 }
