@@ -22,7 +22,7 @@ import cn.sh.sbl.hotel.beans.Film;
  * @date 2013-11-23 下午1:35:35
  * @description TODO
  */
-@XmlRootElement
+@XmlRootElement(name="File")
 public class FileVo {
 	
 	/** 

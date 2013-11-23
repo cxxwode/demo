@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @date 2013-11-22 下午1:52:08
  * @description TODO
  */
-@XmlRootElement(name="MenuVo")
+@XmlRootElement(name="Menu")
 public class MenuVo {
 	
 	/**

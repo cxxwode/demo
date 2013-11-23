@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @description TODO
  */
 
-@XmlRootElement(name="CategoryVo")
+@XmlRootElement(name="Category")
 public class CategoryVo {
 	/** 
 	 * The id of the category.

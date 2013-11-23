@@ -69,9 +69,11 @@ public class TerminalControllerTest {
 		ResultActions ra = this.mockMvc.perform(MockMvcRequestBuilders
 				.post("/menu/1.xml"));//.accept(MediaType.APPLICATION_XML));
 		MvcResult mr = ra.andReturn();
+		assertNotNull(mr.getModelAndView().getModelMap().get("Menu"));
 		assertEquals(200, mr.getResponse().getStatus());
 	}
 	
+	@Ignore
 	@Test
 	@Transactional
 	public void testMenuFilm() throws Exception {

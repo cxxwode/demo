@@ -80,19 +80,19 @@ public class TerminalController {
 	public ModelAndView getMenu(@PathVariable("id")int id, ModelMap modelMap) {
 		// TODO 需要实现根据父级菜单ID获取子菜单信息, 只需要获取下一级菜单即可
 		Menu presentMenu = this.menuService.get(id);
+		logger.info("{}{}",presentMenu.getValid() , presentMenu.getHasChild());
 		if(presentMenu.getValid() && presentMenu.getHasChild()) {
-			Iterator it =  presentMenu.getMenus().iterator();
-			List children =  new ArrayList();
+			Iterator<Menu> it =  presentMenu.getMenus().iterator();
+			List<MenuVo> children =  new ArrayList<MenuVo>();
 			Menu child = null;
-			int i = 0;
 			while(it.hasNext()) {
-				child = (Menu) it.next();
+				child = it.next();
 				MenuVo menuVo = new MenuVo();
 				menuVo.setId(child.getId());
 				menuVo.setName(child.getName());
 				children.add(menuVo);
 			}
-			modelMap.put("Menus", children);
+			modelMap.put("Menu", children);
 		}
 		return new ModelAndView("menu", modelMap);
 	}
