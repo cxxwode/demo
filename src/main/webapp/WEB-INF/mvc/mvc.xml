@@ -68,6 +68,9 @@
 									<value>cn.sh.sbl.hotel.vo.FilmVo</value>
 									<value>cn.sh.sbl.hotel.vo.CategoryVo</value>
 									<value>cn.sh.sbl.hotel.vo.MenuVo</value>
+									<value>cn.sh.sbl.hotel.vo.MenuList</value>
+									<value>cn.sh.sbl.hotel.vo.FilmList</value>
+									<value>cn.sh.sbl.hotel.vo.FileList</value>
 								</list>
 							</property>
 						</bean>

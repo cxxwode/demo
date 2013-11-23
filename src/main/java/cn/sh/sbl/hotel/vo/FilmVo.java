@@ -8,11 +8,9 @@
 package cn.sh.sbl.hotel.vo;
 
 import java.util.Date;
-import java.util.List;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import cn.sh.sbl.hotel.beans.File;
 
 /**
  * @author bunco 
@@ -21,7 +19,7 @@ import cn.sh.sbl.hotel.beans.File;
  * @date 2013-11-22 下午1:52:08
  * @description TODO
  */
-@XmlRootElement(name="Film")
+@XmlRootElement(name="film")
 public class FilmVo {
 	
 	/** 
@@ -69,14 +67,15 @@ public class FilmVo {
 	 */
 	private String remark;
 	
-	private List<FileVo> fileVo;
+	private FileList fileList;
 
-	public List<FileVo> getFileVo() {
-		return fileVo;
+	@XmlElement(name="files")
+	public FileList getFileList() {
+		return fileList;
 	}
 
-	public void setFileVo(List<FileVo> fileVo) {
-		this.fileVo = fileVo;
+	public void setFileList(FileList fileList) {
+		this.fileList = fileList;
 	}
 
 	public String getId() {

@@ -29,9 +29,12 @@ import cn.sh.sbl.hotel.service.IActorService;
 import cn.sh.sbl.hotel.service.IFilmService;
 import cn.sh.sbl.hotel.service.IMenuService;
 import cn.sh.sbl.hotel.vo.ActorVo;
+import cn.sh.sbl.hotel.vo.FileList;
 import cn.sh.sbl.hotel.vo.FileVo;
+import cn.sh.sbl.hotel.vo.FilmList;
 import cn.sh.sbl.hotel.vo.FilmVo;
 import cn.sh.sbl.hotel.vo.MenuVo;
+import cn.sh.sbl.hotel.vo.MenuList;
 
 /**
  * @author bunco 
@@ -92,7 +95,7 @@ public class TerminalController {
 				menuVo.setName(child.getName());
 				children.add(menuVo);
 			}
-			modelMap.put("Menu", children);
+			modelMap.put("Menu", new MenuList(children));
 		}
 		return new ModelAndView("menu", modelMap);
 	}
@@ -110,8 +113,8 @@ public class TerminalController {
 		Menu presentMenu = this.menuService.get(id);
 		logger.debug("{}菜单{}合法{}子节点",presentMenu.getName(),presentMenu.getValid(),!presentMenu.getHasChild());
 		if(presentMenu.getValid() && !presentMenu.getHasChild()) {
-			Iterator it =  presentMenu.getMenuFilms().iterator();
-			List menuFilms = new ArrayList();
+			Iterator<MenuFilm> it =  presentMenu.getMenuFilms().iterator();
+			List<FilmVo> menuFilms = new ArrayList<FilmVo>();
 			MenuFilm menuFilm = null;
 			Film film = null;
 			while(it.hasNext()) {
@@ -126,7 +129,7 @@ public class TerminalController {
 			}
 			
 			logger.debug("栏目{}下电影数目{}",presentMenu.getName(),presentMenu.getMenuFilms().size());
-			modelMap.put("MenuFilm", menuFilms);
+			modelMap.put("MenuFilm", new FilmList(menuFilms));
 		}
 		return new ModelAndView("films", modelMap);
 	}
@@ -153,14 +156,15 @@ public class TerminalController {
 			filmVo.setRatings(film.getRatings());
 			filmVo.setLastUpdate(film.getLastUpdate());
 			filmVo.setLength(film.getLength());
-			List<FileVo> fileVos = new ArrayList();
-			Iterator it = film.getFiles().iterator();
+			List<FileVo> fileVos = new ArrayList<FileVo>();
+			Iterator<File> it = film.getFiles().iterator();
 			logger.info("电影的文件个数{}",film.getFiles().size());
 			while(it.hasNext()){
 				FileVo fileVo = new FileVo();
-				File file = (File) it.next();
-				fileVo.setId(file.getId());
+				File file = it.next();
 				fileVo.setFileName(file.getFileName());
+				fileVo.setFileId(file.getId().getId());
+				fileVo.setFilmId(file.getId().getFilmId());
 				//fileVo.setCategory(file.getCategory());
 				fileVo.setFileSize(file.getFileSize());
 				fileVo.setLastUpdate(file.getLastUpdate());
@@ -168,7 +172,7 @@ public class TerminalController {
 				fileVos.add(fileVo);
 				this.logger.info("影片{}海报视频文件{}",film.getTitle(),fileVo.getFileName());
 			}
-			filmVo.setFileVo(fileVos);
+			filmVo.setFileList(new FileList(fileVos));
 		}
 		modelMap.put("FilmVo", filmVo);
 		return new ModelAndView("film", modelMap);

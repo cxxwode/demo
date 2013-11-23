@@ -9,11 +9,7 @@ package cn.sh.sbl.hotel.vo;
 
 import java.util.Date;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
-import cn.sh.sbl.hotel.beans.Category;
-import cn.sh.sbl.hotel.beans.FileId;
-import cn.sh.sbl.hotel.beans.Film;
+import javax.xml.bind.annotation.XmlElement;
 
 /**
  * @author samsung 
@@ -22,13 +18,18 @@ import cn.sh.sbl.hotel.beans.Film;
  * @date 2013-11-23 下午1:35:35
  * @description TODO
  */
-@XmlRootElement(name="File")
 public class FileVo {
 	
 	/** 
-	 * The id of the film.
+	 * The id of the file.
 	 */
-	private FileId id;
+	private int fileId;
+	
+	/**
+	 * The id of the film
+	 */
+	private String filmId;
+	
 
 	/** 
 	 * The file type of the films.
@@ -55,14 +56,7 @@ public class FileVo {
 	 */
 	private String remark;
 
-	public FileId getId() {
-		return id;
-	}
-
-	public void setId(FileId id) {
-		this.id = id;
-	}
-
+	@XmlElement(name="fileType")
 	public CategoryVo getCategoryVo() {
 		return categoryVo;
 	}
@@ -103,5 +97,36 @@ public class FileVo {
 		this.remark = remark;
 	}
 
+	/** 
+	 * 获取 Theidofthefile. 
+	 * @return fileId Theidofthefile. 
+	 */
+	public int getFileId() {
+		return fileId;
+	}
+
+	/** 
+	 * 设置 Theidofthefile. 
+	 * @param fileId Theidofthefile. 
+	 */
+	public void setFileId(int fileId) {
+		this.fileId = fileId;
+	}
+
+	/** 
+	 * 获取 Theidofthefilm 
+	 * @return filmId Theidofthefilm 
+	 */
+	public String getFilmId() {
+		return filmId;
+	}
+
+	/** 
+	 * 设置 Theidofthefilm 
+	 * @param filmId Theidofthefilm 
+	 */
+	public void setFilmId(String filmId) {
+		this.filmId = filmId;
+	}
 }
 
