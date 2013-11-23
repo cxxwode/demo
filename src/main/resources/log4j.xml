@@ -59,10 +59,6 @@
 		<appender-ref ref="console" />
 		<appender-ref ref="telnet" />
 	</logger>
-	<logger name="junit.test">
-		<level value="debug"/>
-		<appender-ref ref="console"/>
-	</logger>
 	<root>
 		<level value="warn" />
 <!-- 		<appender-ref ref="root_filelog_daily"/> -->

@@ -10,6 +10,7 @@ package cn.sh.sbl.hotel.service;
 import java.util.List;
 
 import cn.sh.sbl.hotel.beans.Actor;
+import cn.sh.sbl.hotel.beans.Menu;
 
 /**
  * @author bunco 
@@ -18,11 +19,11 @@ import cn.sh.sbl.hotel.beans.Actor;
  * @date 2013-11-21 下午3:50:00
  * @description TODO
  */
-public interface IActorService {
+public interface IMenuService {
 
-	public abstract List<Actor> findAll();
+	public abstract List<Menu> findAll();
 	
-	public abstract Actor get(int id);
+	public abstract Menu get(int id);
 	
 	
 

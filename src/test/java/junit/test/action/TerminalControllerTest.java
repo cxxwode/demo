@@ -51,7 +51,8 @@ public class TerminalControllerTest {
 	public void setup() {
 		mockMvc = MockMvcBuilders.standaloneSetup(terminalController).build();
 	}
-
+	
+	@Ignore
 	@Test
 	@Transactional
 	public void testStartPlay() throws Exception {
@@ -62,6 +63,25 @@ public class TerminalControllerTest {
 		assertEquals(200, mr.getResponse().getStatus());
 	}
 
+	@Test
+	@Transactional
+	public void testMenu() throws Exception {
+		ResultActions ra = this.mockMvc.perform(MockMvcRequestBuilders
+				.post("/menu/1.xml"));//.accept(MediaType.APPLICATION_XML));
+		MvcResult mr = ra.andReturn();
+		assertEquals(200, mr.getResponse().getStatus());
+	}
+	
+	@Test
+	@Transactional
+	public void testMenuFilm() throws Exception {
+		ResultActions ra = this.mockMvc.perform(MockMvcRequestBuilders
+				.post("/films/2.xml"));//.accept(MediaType.APPLICATION_XML));
+		MvcResult mr = ra.andReturn();
+		assertNotNull(mr.getModelAndView().getModelMap().get("MenuFilm"));
+		assertEquals(200, mr.getResponse().getStatus());
+	}
+	
 	@Test
 	@Ignore
 	public void test() {
