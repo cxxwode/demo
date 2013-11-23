@@ -8,8 +8,11 @@
 package cn.sh.sbl.hotel.vo;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
+
+import cn.sh.sbl.hotel.beans.File;
 
 /**
  * @author bunco 
@@ -65,6 +68,16 @@ public class FilmVo {
 	 * The remark of the film.
 	 */
 	private String remark;
+	
+	private List<FileVo> fileVo;
+
+	public List<FileVo> getFileVo() {
+		return fileVo;
+	}
+
+	public void setFileVo(List<FileVo> fileVo) {
+		this.fileVo = fileVo;
+	}
 
 	public String getId() {
 		return id;
