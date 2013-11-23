@@ -28,5 +28,7 @@ public interface IFilmService {
 	
 	public abstract Film get(String id);
 	
+	public void addFilm(Film film);
+	
 }
 

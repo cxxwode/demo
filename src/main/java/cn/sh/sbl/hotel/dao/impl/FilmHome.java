@@ -45,7 +45,7 @@ public class FilmHome implements IFilmHome {
 	 * @see cn.sh.sbl.hotel.dao.IFilmHome#save(cn.sh.sbl.hotel.beans.Film)
 	 */
 	public void save(Film transientInstance) {
-		logger.debug("persisting Film instance: {}", transientInstance);
+		logger.debug("persisting Film instance: {}");
 		try {
 			this.common.save(transientInstance);
 			logger.debug("persist successful");
@@ -73,7 +73,7 @@ public class FilmHome implements IFilmHome {
 	 * @see cn.sh.sbl.hotel.dao.IFilmHome#delete(cn.sh.sbl.hotel.beans.Film)
 	 */
 	public void delete(Film persistentInstance) {
-		logger.debug("deleting Film instance: {}", persistentInstance);
+		logger.debug("deleting Film instance: {}", persistentInstance.getId());
 		try {
 			this.common.delete(persistentInstance);
 			logger.debug("delete successful");

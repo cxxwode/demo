@@ -71,10 +71,19 @@ public class Film implements java.io.Serializable {
 
 	private Set<MenuFilm> menuFilms = new HashSet<MenuFilm>(0);
 
+	/**
+	 * The genre of the film
+	 */
 	private Set<Category> categories = new HashSet<Category>(0);
 
+	/**
+	 * The language of the film
+	 */
 	private Set<Category> categories_1 = new HashSet<Category>(0);
 
+	/**
+	 * The directors of the film
+	 */
 	private Set<Director> directors = new HashSet<Director>(0);
 
 	private Set<Actor> actors = new HashSet<Actor>(0);
@@ -306,76 +315,99 @@ public class Film implements java.io.Serializable {
 		this.remark = remark;
 	}
 
-	/**  
+	/** 
+	 * 获取 files 
+	 * @return files files 
 	 */
 	public Set<File> getFiles() {
-		return this.files;
+		return files;
 	}
 
-	/**
+	/** 
+	 * 设置 files 
+	 * @param files files 
 	 */
 	public void setFiles(Set<File> files) {
 		this.files = files;
 	}
 
-	/**  
+	/** 
+	 * 获取 menuFilms 
+	 * @return menuFilms menuFilms 
 	 */
 	public Set<MenuFilm> getMenuFilms() {
-		return this.menuFilms;
+		return menuFilms;
 	}
 
-	/**
+	/** 
+	 * 设置 menuFilms 
+	 * @param menuFilms menuFilms 
 	 */
 	public void setMenuFilms(Set<MenuFilm> menuFilms) {
 		this.menuFilms = menuFilms;
 	}
 
-	/**  
+	/** 
+	 * 获取 Thegenreofthefilm 
+	 * @return categories Thegenreofthefilm 
 	 */
 	public Set<Category> getCategories() {
-		return this.categories;
+		return categories;
 	}
 
-	/**
+	/** 
+	 * 设置 Thegenreofthefilm 
+	 * @param categories Thegenreofthefilm 
 	 */
 	public void setCategories(Set<Category> categories) {
 		this.categories = categories;
 	}
 
-	/**  
+	/** 
+	 * 获取 Thelanguageofthefilm 
+	 * @return categories_1 Thelanguageofthefilm 
 	 */
 	public Set<Category> getCategories_1() {
-		return this.categories_1;
+		return categories_1;
 	}
 
-	/**
+	/** 
+	 * 设置 Thelanguageofthefilm 
+	 * @param categories_1 Thelanguageofthefilm 
 	 */
 	public void setCategories_1(Set<Category> categories_1) {
 		this.categories_1 = categories_1;
 	}
 
-	/**  
+	/** 
+	 * 获取 Thedirectorsofthefilm 
+	 * @return directors Thedirectorsofthefilm 
 	 */
 	public Set<Director> getDirectors() {
-		return this.directors;
+		return directors;
 	}
 
-	/**
+	/** 
+	 * 设置 Thedirectorsofthefilm 
+	 * @param directors Thedirectorsofthefilm 
 	 */
 	public void setDirectors(Set<Director> directors) {
 		this.directors = directors;
 	}
 
-	/**  
+	/** 
+	 * 获取 actors 
+	 * @return actors actors 
 	 */
 	public Set<Actor> getActors() {
-		return this.actors;
+		return actors;
 	}
 
-	/**
+	/** 
+	 * 设置 actors 
+	 * @param actors actors 
 	 */
 	public void setActors(Set<Actor> actors) {
 		this.actors = actors;
 	}
-
 }

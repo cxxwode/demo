@@ -38,7 +38,6 @@ import cn.sh.sbl.hotel.web.action.TerminalController;
 @WebAppConfiguration
 @ContextConfiguration(locations = { "classpath*:applicationContext-*.xml", 
 		"file:src/main/webapp/WEB-INF/mvc/mvc.xml" })
-
 public class TerminalControllerTest {
 	@Autowired
 	private Logger logger;

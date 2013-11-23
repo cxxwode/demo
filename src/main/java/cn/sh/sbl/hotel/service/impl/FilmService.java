@@ -52,5 +52,9 @@ public class FilmService implements IFilmService {
 		return this.filmHome.findById(id);
 	}
 
+	public void addFilm(Film film) {
+		// TODO Auto-generated method stub
+		this.filmHome.save(film);
+	}
 }
 
