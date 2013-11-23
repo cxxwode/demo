@@ -10,10 +10,10 @@ package cn.sh.sbl.hotel.vo;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * @author bunco 
- * @E-mail: bunco.hb@gmail.com
+ * @author lufeng 
+ * @E-mail: 
  * @version 1.0 
- * @date 2013-11-22 下午1:52:08
+ * @date 2013年11月22日23:07:48
  * @description TODO
  */
 @XmlRootElement

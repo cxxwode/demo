@@ -7,6 +7,8 @@
  */
 package cn.sh.sbl.hotel.web.action;
 
+import java.util.Iterator;
+
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,8 +20,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cn.sh.sbl.hotel.beans.Actor;
 import cn.sh.sbl.hotel.beans.Film;
+import cn.sh.sbl.hotel.beans.Menu;
 import cn.sh.sbl.hotel.service.IActorService;
+import cn.sh.sbl.hotel.service.IMenuService;
 import cn.sh.sbl.hotel.vo.ActorVo;
+import cn.sh.sbl.hotel.vo.MenuVo;
 
 /**
  * @author bunco 
@@ -34,6 +39,8 @@ public class TerminalController {
 	private Logger logger;
 	@Autowired
 	private IActorService actorService;
+	@Autowired
+	private IMenuService menuService;
 	
 	/**
 	 * this is test url pattern is a template
@@ -64,6 +71,20 @@ public class TerminalController {
 	@Transactional
 	public ModelAndView getMenu(@PathVariable("id")int id, ModelMap modelMap) {
 		// TODO 需要实现根据父级菜单ID获取子菜单信息, 只需要获取下一级菜单即可
+		Menu presentMenu = this.menuService.get(id);
+		if(presentMenu.getValid() && presentMenu.getHasChild()) {
+			Iterator it =  presentMenu.getMenus().iterator();
+			Menu child = null;
+			int i = 0;
+			while(it.hasNext()) {
+				child = (Menu) it.next();
+				MenuVo menuVo = new MenuVo();
+				menuVo.setId(child.getId());
+				menuVo.setName(child.getName());
+				modelMap.put("menu" + i, menuVo);
+				i++;
+			}
+		}
 		return new ModelAndView("menu", modelMap);
 	}
 	
@@ -77,6 +98,13 @@ public class TerminalController {
 	@Transactional
 	public ModelAndView getFilms(@PathVariable("id")int id, ModelMap modelMap) {
 		// TODO 需要实现根据菜单编号, 查询该菜单下绑定的影片列表(需要校验只有不包含子菜单的的菜单), 需返回影片的描述信息, 及海报路径
+		Menu presentMenu = this.menuService.get(id);
+		if(presentMenu.getValid() && !presentMenu.getHasChild()) {
+			Iterator it =  presentMenu.getMenuFilms().iterator();
+			while(it.hasNext()) {
+				
+			}
+		}
 		return new ModelAndView("films", modelMap);
 	}
 	
