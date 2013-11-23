@@ -9,6 +9,8 @@ package cn.sh.sbl.hotel.vo;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import cn.sh.sbl.hotel.beans.Category;
 import cn.sh.sbl.hotel.beans.FileId;
 import cn.sh.sbl.hotel.beans.Film;
@@ -20,6 +22,7 @@ import cn.sh.sbl.hotel.beans.Film;
  * @date 2013-11-23 下午1:35:35
  * @description TODO
  */
+@XmlRootElement
 public class FileVo {
 	
 	/** 
@@ -30,7 +33,7 @@ public class FileVo {
 	/** 
 	 * The file type of the films.
 	 */
-	private Category category;
+	private CategoryVo categoryVo;
 
 	/** 
 	 * The name of the file.
@@ -60,12 +63,12 @@ public class FileVo {
 		this.id = id;
 	}
 
-	public Category getCategory() {
-		return category;
+	public CategoryVo getCategoryVo() {
+		return categoryVo;
 	}
 
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setCategoryVo(CategoryVo categoryVo) {
+		this.categoryVo = categoryVo;
 	}
 
 	public String getFileName() {

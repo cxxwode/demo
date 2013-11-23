@@ -7,6 +7,8 @@
  */
 package cn.sh.sbl.hotel.vo;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * @author samsung 
  * @E-mail: cxxwode@163.com
@@ -14,6 +16,7 @@ package cn.sh.sbl.hotel.vo;
  * @date 2013-11-23 下午2:19:49
  * @description TODO
  */
+@XmlRootElement(name="DirectorVo")
 public class DirectorVo {
 	/** 
 	 * The id of the director.

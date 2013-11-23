@@ -21,7 +21,7 @@ import cn.sh.sbl.hotel.beans.File;
  * @date 2013-11-22 下午1:52:08
  * @description TODO
  */
-@XmlRootElement
+@XmlRootElement(name="FilmVo")
 public class FilmVo {
 	
 	/** 

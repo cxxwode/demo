@@ -124,6 +124,7 @@ public class TerminalController {
 				filmVo.setReleaseYear(film.getReleaseYear());
 				menuFilms.add(filmVo);
 			}
+			
 			logger.debug("栏目{}下电影数目{}",presentMenu.getName(),presentMenu.getMenuFilms().size());
 			modelMap.put("MenuFilm", menuFilms);
 		}
@@ -154,12 +155,13 @@ public class TerminalController {
 			filmVo.setLength(film.getLength());
 			List<FileVo> fileVos = new ArrayList();
 			Iterator it = film.getFiles().iterator();
+			logger.info("电影的文件个数{}",film.getFiles().size());
 			while(it.hasNext()){
 				FileVo fileVo = new FileVo();
 				File file = (File) it.next();
 				fileVo.setId(file.getId());
 				fileVo.setFileName(file.getFileName());
-				fileVo.setCategory(file.getCategory());
+				//fileVo.setCategory(file.getCategory());
 				fileVo.setFileSize(file.getFileSize());
 				fileVo.setLastUpdate(file.getLastUpdate());
 				fileVo.setRemark(file.getRemark());
@@ -168,6 +170,7 @@ public class TerminalController {
 			}
 			filmVo.setFileVo(fileVos);
 		}
+		modelMap.put("FilmVo", filmVo);
 		return new ModelAndView("film", modelMap);
 	}
 	

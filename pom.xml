@@ -5,7 +5,7 @@
 	<artifactId>demo</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo</name>
+	<name>hotel.demo Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>

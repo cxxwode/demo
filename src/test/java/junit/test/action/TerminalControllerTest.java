@@ -15,7 +15,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -58,14 +57,12 @@ public class TerminalControllerTest {
 	@Transactional
 	public void testStartPlay() throws Exception {
 		ResultActions ra = this.mockMvc.perform(MockMvcRequestBuilders
-				.post("/test.xml"));//.accept(MediaType.APPLICATION_XML));
+				.get("/test.json"));//.accept(MediaType.APPLICATION_XML));
 		MvcResult mr = ra.andReturn();
-		String result = mr.getResponse().getContentAsString();
-		logger.debug("{}", result);
-		logger.debug("{}", mr.getResponse().getStatus());
+		assertNotNull(mr.getModelAndView().getModelMap().get("Actor"));
+		assertEquals(200, mr.getResponse().getStatus());
 	}
 
-	@Ignore
 	@Test
 	@Transactional
 	public void testMenu() throws Exception {
@@ -85,8 +82,8 @@ public class TerminalControllerTest {
 		assertEquals(200, mr.getResponse().getStatus());
 	}
 	
-	@Ignore
 	@Test
+	@Ignore
 	public void test() {
 		fail("Not yet implemented");
 	}
