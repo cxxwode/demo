@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @date 2013年11月22日23:07:48
  * @description TODO
  */
-@XmlRootElement(name="ActorVo")
+@XmlRootElement(name="Actor")
 public class ActorVo {
 	private int id;
 	private String firstName;

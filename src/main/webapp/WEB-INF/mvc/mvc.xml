@@ -63,6 +63,11 @@
 							<property name="classesToBeBound">
 								<list>
 									<value>cn.sh.sbl.hotel.vo.ActorVo</value>
+									<value>cn.sh.sbl.hotel.vo.DirectorVo</value>
+									<value>cn.sh.sbl.hotel.vo.FileVo</value>
+									<value>cn.sh.sbl.hotel.vo.FilmVo</value>
+									<value>cn.sh.sbl.hotel.vo.CategoryVo</value>
+									<value>cn.sh.sbl.hotel.vo.MenuVo</value>
 								</list>
 							</property>
 						</bean>
