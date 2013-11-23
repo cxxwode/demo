@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>cn.sh.sbl</groupId>
-	<artifactId>hotel.demo</artifactId>
+	<artifactId>demo</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>hotel.demo Maven Webapp</name>
@@ -87,6 +87,6 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>hotel.demo</finalName>
+		<finalName>demo</finalName>
 	</build>
 </project>
