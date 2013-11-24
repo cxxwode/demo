@@ -15,6 +15,25 @@
 	<aop:aspectj-autoproxy />
 	<context:component-scan base-package="cn.sh.sbl.hotel" />
 	<mvc:annotation-driven />
+	
+	<bean id="multipartResolver" 
+	    class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+        <property name="defaultEncoding" value="utf-8" />  
+<!--         <property name="maxUploadSize" value="10485760000" />   -->
+        <property name="maxUploadSize" value="53687091200" />  
+        <property name="maxInMemorySize" value="40960" />  
+    </bean>
+    
+	<!-- SpringMVC在超出上传文件限制时,会抛出org.springframework.web.multipart.MaxUploadSizeExceededException -->  
+    <!-- 该异常是SpringMVC在检查上传的文件信息时抛出来的,而且此时还没有进入到Controller方法中 -->  
+    <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
+        <property name="exceptionMappings">  
+            <props>  
+                <!-- 遇到MaxUploadSizeExceededException异常时,自动跳转到/WEB-INF/view/error_fileupload.ftl页面 -->  
+                <prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">error_fileupload</prop>  
+            </props>  
+        </property>  
+    </bean>
 
 	<bean id="freemarkerConfig"
 		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
@@ -88,14 +107,11 @@
 <!-- 		<property name="suffix" value=".jsp" /> -->
 <!-- 	</bean> -->
 
-	<mvc:resources mapping="/images/**" location="/images/"
-		cache-period="31556926" />
-	<mvc:resources mapping="/js/**" location="/js/"
-		cache-period="31556926" />
-	<mvc:resources mapping="/css/**" location="/css/"
-		cache-period="31556926" />
-	<mvc:resources mapping="/flex/**" location="/flex/"
-		cache-period="31556926" />
+	<mvc:resources mapping="/images/**" location="/images/" cache-period="31556926" />
+	<mvc:resources mapping="/js/**" location="/js/" cache-period="31556926" />
+	<mvc:resources mapping="/css/**" location="/css/" cache-period="31556926" />
+	<mvc:resources mapping="/flex/**" location="/flex/" cache-period="31556926" />
+	<mvc:resources mapping="/upload/**" location="/upload/" cache-period="31556926" />
 
 	<!-- <mvc:interceptors> -->
 	<!-- <bean id="authorizeInterceptor" class="cn.sh.sbl.hotelvod.interceptor.AuthorizeInterceptor"/> -->
