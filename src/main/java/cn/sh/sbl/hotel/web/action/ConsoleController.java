@@ -55,8 +55,8 @@ public class ConsoleController {
 	@Transactional
 	public ModelAndView demo(@PathVariable("name")String name, @RequestParam("file")MultipartFile[] files,
 			HttpServletRequest request, ModelMap modelMap) {
-		String realPath = request.getSession().getServletContext().getRealPath("/upload");  
-		logger.debug("start uplpad file! upload path: {}", realPath);
+		String realPath = request.getSession().getServletContext().getRealPath("/");  
+		logger.debug("start uplpad file! real path: {}", realPath);
 		boolean success = true;
 		if (0 < files.length) {
 			for (MultipartFile multipartFile : files) {
@@ -68,7 +68,21 @@ public class ConsoleController {
 						multipartFile.getOriginalFilename(), multipartFile.getName(),
 						multipartFile.getSize(), multipartFile.getContentType());
 				try {
-					multipartFile.transferTo(new File(realPath + "/" + multipartFile.getOriginalFilename()));
+					File destFile = new File(realPath + "/upload/" + multipartFile.getOriginalFilename());
+					logger.debug("File[{}] - [{}] will upload to: {}", 
+							multipartFile.getOriginalFilename(), 
+							destFile.setExecutable(false) && !destFile.canExecute(),
+							destFile.getAbsolutePath());
+					if (!destFile.getParentFile().exists()) {
+						logger.info("This is first upload, make parent dir: {}, canRead: {}, canWrite: {}, canExecute: {}", 
+								destFile.mkdirs(), destFile.getParentFile().setReadable(true, false) 
+									&& destFile.getParentFile().canRead(),
+								destFile.getParentFile().setWritable(true, false) 
+									&& destFile.getParentFile().canWrite(),
+								destFile.getParentFile().setExecutable(true, false)
+									&& destFile.getParentFile().canExecute());
+					}
+					multipartFile.transferTo(destFile);
 					modelMap.put(multipartFile.getOriginalFilename(), "upload successfull!");
 				} catch (Exception e) {
 					success = false;
