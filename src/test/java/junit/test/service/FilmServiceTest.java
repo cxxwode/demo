@@ -9,8 +9,7 @@ package junit.test.service;
 
 import static org.junit.Assert.*;
 
-import java.util.Date;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
@@ -20,9 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
-import cn.sh.sbl.hotel.beans.Category;
 import cn.sh.sbl.hotel.beans.File;
 import cn.sh.sbl.hotel.beans.Film;
 import cn.sh.sbl.hotel.service.ICategoryService;
@@ -48,25 +45,54 @@ public class FilmServiceTest {
 	private ICategoryService categoryService;
 	
 	@Test
-	@Transactional
-	public void testAddFilmSuccess() {
+	public void testAddFilmSuccessThenDelete() {
 		Film film = new Film();
-		film.setId("test001");
-		film.setTitle("007");
-		film.setLastUpdate(new Date());
+		film.setId("asdfoasdf");
+		film.setTitle("july 3");
 		
-		List<Category> fileTypeCategories = this.categoryService.findByKey("file_type");
-		List<Category> genreCategories = this.categoryService.findByKey("genre");
-		List<Category> languageCategories = this.categoryService.findByKey("language");
-		film.setCategories(new HashSet<Category>(genreCategories));
-		film.setCategories_1(new HashSet<Category>(languageCategories));
+		List<File> list = new ArrayList<File>();
+		File posterFile = new File();
+		posterFile.setFilmId(film.getId());
+		posterFile.setFileName("asdfk.png");
+		posterFile.setCategoryFilm(14);
+		posterFile.setFileSize("asodifas");
+		list.add(posterFile);
 		
-		File postFile = new File();
-		postFile.setFilm(film);
-		postFile.setFileName("test001.png");
-		postFile.setCategory(fileTypeCategories.get(0));
+		File contentFile = new File();
+		contentFile.setFilmId(film.getId());
+		contentFile.setFileName("asdfk.ts");
+		contentFile.setCategoryFilm(13);
+		contentFile.setFileSize("a3242fas");
+		list.add(contentFile);
+		this.filmService.addFilm(film, list);
+		assertEquals(film.getTitle(), this.filmService.get(film.getId()).getTitle());
+		this.filmService.deleteFilm(film.getId());
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public void testAddFilmFailedAndRollback() {
+		Film film = new Film();
+		film.setId("asdfoasdf2");
+		film.setTitle("july 4");
 		
-		this.filmService.addFilm(film);
-		assertNotNull(this.filmService.get("test001"));
+		List<File> list = new ArrayList<File>();
+		File posterFile = new File();
+		posterFile.setFilmId(film.getId());
+		posterFile.setFileName("4sdfk.png");
+		posterFile.setCategoryFilm(14);
+		posterFile.setFileSize("a4odifas");
+		list.add(posterFile);
+		
+		File contentFile = new File();
+		contentFile.setFileName("asdfk.ts");
+		contentFile.setCategoryFilm(13);
+		contentFile.setFileSize("NaN"); 
+		list.add(contentFile);
+		this.filmService.addFilm(film, list);
+	}
+	
+	@Test
+	public void testDeleteInexistenceFilm() {
+		this.filmService.deleteFilm("I think this ID should not exist");
 	}
 }

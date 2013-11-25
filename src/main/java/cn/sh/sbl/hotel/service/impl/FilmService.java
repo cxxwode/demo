@@ -15,9 +15,13 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import cn.sh.sbl.hotel.beans.File;
+import cn.sh.sbl.hotel.beans.FileExample;
 import cn.sh.sbl.hotel.beans.Film;
-import cn.sh.sbl.hotel.dao.IFilmHome;
+import cn.sh.sbl.hotel.dao.FileMapper;
+import cn.sh.sbl.hotel.dao.FilmMapper;
 import cn.sh.sbl.hotel.service.IFilmService;
 
 /**
@@ -34,27 +38,38 @@ public class FilmService implements IFilmService {
 	@Autowired
 	private Logger logger;
 	@Autowired
-	private IFilmHome filmHome;
+	private FilmMapper filmMapper;
+	@Autowired
+	private FileMapper fileMapper;
 	
 	/* (non-Javadoc)
 	 * @see cn.sh.sbl.hotel.service.IFilmService#findAll()
 	 */
 	public List<Film> findAll() {
-		// TODO Auto-generated method stub
-		return this.filmHome.findAll();
+		return this.filmMapper.selectByExample(null);
 	}
 
 	/* (non-Javadoc)
 	 * @see cn.sh.sbl.hotel.service.IFilmService#get(int)
 	 */
 	public Film get(String id) {
-		// TODO Auto-generated method stub
-		return this.filmHome.findById(id);
+		return this.filmMapper.selectByPrimaryKey(id);
 	}
 
-	public void addFilm(Film film) {
-		// TODO Auto-generated method stub
-		this.filmHome.save(film);
+	@Transactional(rollbackFor=RuntimeException.class)
+	public void addFilm(Film film, List<File> files) {
+		this.filmMapper.insert(film);
+		for (File file : files) {
+			this.fileMapper.insert(file);
+		}
+	}
+
+	@Transactional(rollbackFor=RuntimeException.class)
+	public void deleteFilm(String id) {
+		FileExample example = new FileExample();
+		example.createCriteria().andFilmIdEqualTo(id);
+		this.fileMapper.deleteByExample(example);
+		this.filmMapper.deleteByPrimaryKey(id);
 	}
 }
 

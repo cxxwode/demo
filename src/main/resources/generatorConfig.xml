@@ -10,19 +10,19 @@
 	        <property name="targetProject" value="src/main/resources"/>  
         </plugin>
 		<!-- 此处是将Example改名为Criteria 当然 想改成什么都行 -->  
-        <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">  
-	        <property name="searchString" value="Example"/>  
-	        <property name="replaceString" value="Criteria"/>  
-        </plugin>
+<!--         <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">   -->
+<!-- 	        <property name="searchString" value="Example"/>   -->
+<!-- 	        <property name="replaceString" value="Criteria"/>   -->
+<!--         </plugin> -->
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
         <!-- commentGenerator 去除自动生成的注释  -->  
-        <commentGenerator>  
-        	<property name="suppressDate" value="true" />  
-        	<property name="suppressAllComments" value="true" />
-        </commentGenerator>
+<!--         <commentGenerator>   -->
+<!--         	<property name="suppressDate" value="true" />   -->
+<!--         	<property name="suppressAllComments" value="true" /> -->
+<!--         </commentGenerator> -->
         
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://10.0.2.2:3306/demo" userId="root" password="" />
+			connectionURL="jdbc:mysql://10.37.140.186:3306/demo" userId="root" password="root" />
 
 		<!-- 指定生成的类型为java类型，避免数据库中number等类型字段 -->
 		<javaTypeResolver>
@@ -30,19 +30,19 @@
 		</javaTypeResolver>
 
 		<!-- 生成model模型，对应的包，存放位置可以指定具体的路径,如/ProjectName/src，也可以使用MAVEN来自动生成 -->
-		<javaModelGenerator targetPackage="cn.sh.sbl.hotel.dao.mybatis"
+		<javaModelGenerator targetPackage="cn.sh.sbl.hotel.beans"
 			targetProject="src/main/java">
 			<property name="enableSubPackages" value="true" />
 		</javaModelGenerator>
 
 		<!--对应的xml mapper文件 -->
-		<sqlMapGenerator targetPackage="cn.sh.sbl.hotel.dao.mybatis" targetProject="src/main/java">
+		<sqlMapGenerator targetPackage="cn.sh.sbl.hotel.dao.mapper" targetProject="src/main/java">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 
 		<!-- 对应的dao接口 -->
 		<javaClientGenerator type="XMLMAPPER"
-			targetPackage="cn.sh.sbl.hotel.dao.mybatis" targetProject="src/main/java">
+			targetPackage="cn.sh.sbl.hotel.dao" targetProject="src/main/java">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
@@ -50,11 +50,24 @@
 		    <!-- 返回新增记录ID值 -->  
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
 		</table>
-		<table tableName="film" domainObjectName="Film" >
-		    <!-- 返回新增记录ID值 -->  
-            <generatedKey column="id" sqlStatement="MySql" identity="false"/>
+		<table tableName="director" domainObjectName="Director">
+		    <generatedKey column="id" sqlStatement="MySql" identity="true"/>
 		</table>
-		<table tableName="film_actor" domainObjectName="FilmActor">
+		<table tableName="category" domainObjectName="Category">
+		    <generatedKey column="id" sqlStatement="MySql" identity="true"/>
 		</table>
+		<table tableName="file" domainObjectName="File">
+		    <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="menu" domainObjectName="Menu">
+		    <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="film" domainObjectName="Film" />
+		<table tableName="film" domainObjectName="Film" />
+		<table tableName="film_actor" domainObjectName="FilmActor"/>
+		<table tableName="film_director" domainObjectName="FilmDirector"/>
+		<table tableName="film_genre" domainObjectName="FilmGenre"/>
+		<table tableName="film_language" domainObjectName="FilmLanguage"/>
+		<table tableName="menu_film" domainObjectName="MenuFilm"/>
 	</context>
 </generatorConfiguration> 

@@ -24,6 +24,5 @@ public interface IActorService {
 	
 	public abstract Actor get(int id);
 	
-	
-
+	public void save(Actor actor);
 }

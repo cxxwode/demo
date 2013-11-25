@@ -12,9 +12,10 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import cn.sh.sbl.hotel.beans.Actor;
-import cn.sh.sbl.hotel.dao.IActorHome;
+import cn.sh.sbl.hotel.dao.ActorMapper;
 import cn.sh.sbl.hotel.service.IActorService;
 
 /**
@@ -29,17 +30,21 @@ public class ActorService implements IActorService {
 	@Autowired
 	private Logger logger;
 	@Autowired
-	private IActorHome actorHome;
+	private ActorMapper actorMapper;
 	
 	/* (non-Javadoc)
 	 * @see cn.sh.sbl.hotel.service.impl.IActorService#findAll()
 	 */
 	public List<Actor> findAll() {
-		return this.actorHome.findAll();
+		return this.actorMapper.selectByExample(null);
 	}
 
 	public Actor get(int id) {
-		return this.actorHome.findById(id);
+		return this.actorMapper.selectByPrimaryKey(id);
 	}
 
+	public void save(Actor actor) {
+		this.logger.debug("to save actor: {}", actor);
+		this.actorMapper.insert(actor);
+	}
 }

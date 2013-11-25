@@ -12,6 +12,7 @@ package cn.sh.sbl.hotel.service;
 
 import java.util.List;
 
+import cn.sh.sbl.hotel.beans.File;
 import cn.sh.sbl.hotel.beans.Film;
 
 /**
@@ -28,7 +29,9 @@ public interface IFilmService {
 	
 	public abstract Film get(String id);
 	
-	public void addFilm(Film film);
+	public void addFilm(Film film, List<File> files);
+	
+	public void deleteFilm(String id);
 	
 }
 

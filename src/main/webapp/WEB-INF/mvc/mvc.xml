@@ -13,7 +13,7 @@
 
 	<!-- 配置srping自动 扫描包 -->
 	<aop:aspectj-autoproxy />
-	<context:component-scan base-package="cn.sh.sbl.hotel" />
+	<context:component-scan base-package="cn.sh.sbl.hotel.web.action" />
 	<mvc:annotation-driven />
 	
 	<bean id="multipartResolver" 

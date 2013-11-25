@@ -13,7 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.sh.sbl.hotel.beans.Category;
-import cn.sh.sbl.hotel.dao.ICategoryHome;
+import cn.sh.sbl.hotel.beans.CategoryExample;
+import cn.sh.sbl.hotel.dao.CategoryMapper;
 import cn.sh.sbl.hotel.service.ICategoryService;
 
 /**
@@ -26,15 +27,15 @@ import cn.sh.sbl.hotel.service.ICategoryService;
 @Service
 public class CategoryService implements ICategoryService {
 	@Autowired
-	private ICategoryHome categoryHome;
+	private CategoryMapper categoryMapper;
 
 	public List<Category> findAll() {
-		return this.categoryHome.findAll();
+		return this.categoryMapper.selectByExample(null);
 	}
 
 	public List<Category> findByKey(String key) {
-		Category category = new Category();
-		category.setCkey(key);
-		return this.categoryHome.findByExample(category);
+		CategoryExample example = new CategoryExample();
+		example.createCriteria().andCkeyEqualTo(key);
+		return this.categoryMapper.selectByExample(example);
 	}
 }

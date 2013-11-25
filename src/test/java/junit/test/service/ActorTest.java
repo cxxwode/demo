@@ -15,15 +15,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Repeat;
 import org.springframework.test.annotation.Timed;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
 import cn.sh.sbl.hotel.beans.Actor;
-import cn.sh.sbl.hotel.beans.Film;
 import cn.sh.sbl.hotel.service.IActorService;
 
 /**
@@ -37,6 +34,7 @@ import cn.sh.sbl.hotel.service.IActorService;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath*:applicationContext-*.xml"})
+//		"file:src/main/webapp/WEB-INF/mvc/mvc.xml"})
 public class ActorTest {
 	@Autowired
 	private Logger logger;
@@ -44,19 +42,20 @@ public class ActorTest {
 	private IActorService actorService;
 
 	@Test
-	@Transactional
 	@Timed(millis=2000)
-	@Repeat(10)
-	public void test() {
+	public void testFindAll() {
 		List<Actor> list = this.actorService.findAll();
 		logger.debug("list size: {}", list.size());
-		for (Actor actor : list) {
-			StringBuilder filmNames = new StringBuilder();
-			for (Film film : actor.getFilms()) {
-				filmNames.append(film.getTitle() + " director size: " + film.getDirectors().size());
-			}
-			logger.debug("{} {} {} - [{}]", actor.getId(), actor.getFirstName(), actor.getLastName(), filmNames.toString());
-		}
 		assertTrue(0 < list.size());
+	}
+	
+	@Test
+	public void testAddActor() {
+		String firstName = "one";
+		String lastName = "A";
+		Actor actor = new Actor();
+		actor.setFirstName(firstName);
+		actor.setLastName(lastName);
+		this.actorService.save(actor);
 	}
 }

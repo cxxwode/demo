@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.sh.sbl.hotel.beans.Menu;
-import cn.sh.sbl.hotel.dao.IMenuHome;
+import cn.sh.sbl.hotel.dao.MenuMapper;
 import cn.sh.sbl.hotel.service.IMenuService;
 
 /**
@@ -24,14 +24,14 @@ public class MenuService implements IMenuService {
 	@Autowired
 	private Logger logger;
 	@Autowired
-	private IMenuHome menuHome;
+	private MenuMapper menuMapper;
 	
 	public List<Menu> findAll() {
-		return this.menuHome.findAll();
+		return this.menuMapper.selectByExample(null);
 	}
 
 	public Menu get(int id) {
-		return this.menuHome.findById(id);
+		return this.menuMapper.selectByPrimaryKey(id);
 	}
 
 }
