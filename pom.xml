@@ -13,7 +13,7 @@
         <slf4j.version>1.7.5</slf4j.version>  
         <mysql.version>5.1.27</mysql.version>  
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>  
-        <mybatis.generator.overwrite>true</mybatis.generator.overwrite>
+        <mybatis.generator.overwrite>false</mybatis.generator.overwrite>
     </properties> 
     
     <!-- 声明maven jar仓库 可以从这些仓库获得jar包 -->  
