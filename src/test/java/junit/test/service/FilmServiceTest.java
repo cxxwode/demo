@@ -66,7 +66,7 @@ public class FilmServiceTest {
 		list.add(contentFile);
 		this.filmService.addFilm(film, list);
 		assertEquals(film.getTitle(), this.filmService.get(film.getId()).getTitle());
-		this.filmService.deleteFilm(film.getId());
+		//this.filmService.deleteFilm(film.getId());
 	}
 	
 	@Test(expected=RuntimeException.class)
