@@ -66,7 +66,7 @@ public class TerminalControllerTest {
 	@Transactional
 	public void testMenu() throws Exception {
 		ResultActions ra = this.mockMvc.perform(MockMvcRequestBuilders
-				.post("/menu/1.xml"));//.accept(MediaType.APPLICATION_XML));
+				.post("/menu/1.json"));//.accept(MediaType.APPLICATION_XML));
 		MvcResult mr = ra.andReturn();
 		assertNotNull(mr.getModelAndView().getModelMap().get("Menu"));
 		assertEquals(200, mr.getResponse().getStatus());

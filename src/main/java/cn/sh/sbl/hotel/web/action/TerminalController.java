@@ -79,6 +79,8 @@ public class TerminalController {
 		// TODO 需要实现根据父级菜单ID获取子菜单信息, 只需要获取下一级菜单即可
 		Menu presentMenu = this.menuService.get(id);
 		logger.info("{}{}",presentMenu.getValid() , presentMenu.getHasChild());
+		List<Menu> childMenus = this.menuService.getChildrenById(id);
+		modelMap.put("menus", childMenus);
 		return new ModelAndView("menu", modelMap);
 	}
 	
@@ -94,6 +96,7 @@ public class TerminalController {
 		// TODO 需要实现根据菜单编号, 查询该菜单下绑定的影片列表(需要校验只有不包含子菜单的的菜单), 需返回影片的描述信息, 及海报路径
 		Menu presentMenu = this.menuService.get(id);
 		logger.debug("{}菜单{}合法{}子节点",presentMenu.getName(),presentMenu.getValid(),!presentMenu.getHasChild());
+		
 		return new ModelAndView("films", modelMap);
 	}
 	

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.sh.sbl.hotel.beans.Menu;
+import cn.sh.sbl.hotel.beans.MenuExample;
 import cn.sh.sbl.hotel.dao.MenuMapper;
 import cn.sh.sbl.hotel.service.IMenuService;
 
@@ -33,5 +34,12 @@ public class MenuService implements IMenuService {
 	public Menu get(int id) {
 		return this.menuMapper.selectByPrimaryKey(id);
 	}
-
+	
+	public List<Menu> getChildrenById(int id){
+		MenuExample example = new MenuExample();
+		example.createCriteria().andParentEqualTo(id)
+			.andValidEqualTo(true)
+			.andHasChildEqualTo(true);
+		return menuMapper.selectByExample(example);
+	}
 }
