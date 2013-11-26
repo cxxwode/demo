@@ -21,6 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name="films")
 public class FilmList {
+	
 	private List<FilmVo> filmVos;
 	
 	public FilmList() {}

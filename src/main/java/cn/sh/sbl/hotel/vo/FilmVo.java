@@ -77,7 +77,7 @@ public class FilmVo {
 	
 	public FilmVo(String filmId, String fileTitle) {
 		this.id = filmId;
-		this.title = title;
+		this.title = fileTitle;
 	}
 	
 	public FilmVo(String filmId, String country, String decription, Date lastUpdate, 

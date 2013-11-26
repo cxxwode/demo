@@ -60,7 +60,6 @@ public class TerminalController {
 	private IFileService fileService;
 	
 	
-	
 	/**
 	 * this is test url pattern is a template
 	 * @param modelMap
@@ -114,7 +113,7 @@ public class TerminalController {
 			filmVo.setFileList(new FileList(files));
 			filmVos.add(filmVo);
 		}
-		modelMap.put("film", filmVos);
+		modelMap.put("film", new FilmList(filmVos));
 		return new ModelAndView("films", modelMap);
 	}
 	
@@ -129,6 +128,14 @@ public class TerminalController {
 	public ModelAndView getFilm(@PathVariable("id")String id, ModelMap modelMap) {
 		// TODO 需要实现根据影片编号, 查询该影片的文件信息, 需返回影片的描述信息, 海报路径, 视频文件及字幕路径. 
 		// 需记录logger.info日志, 目的记录影片海报的查看信息. 为以后统计报表做准备
+		
+		Film f = this.filmService.get(id);
+		logger.debug("{}",f.getTitle());
+		FilmVo filmVo = new FilmVo(f.getId(), f.getTitle());
+		List<File> files = this.fileService.findFileByFilmId(f.getId());
+		filmVo.setFileList(new FileList(files));
+		
+		modelMap.put("filmVo", filmVo);
 		return new ModelAndView("film", modelMap);
 	}
 	

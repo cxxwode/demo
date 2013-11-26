@@ -10,6 +10,7 @@ package cn.sh.sbl.hotel.vo;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import cn.sh.sbl.hotel.beans.File;
 
@@ -20,6 +21,7 @@ import cn.sh.sbl.hotel.beans.File;
  * @date 2013-11-23 下午6:06:04
  * @description TODO
  */
+@XmlRootElement(name="files")
 public class FileList {
 	private List<File> files;
 
