@@ -42,4 +42,9 @@ public class MenuService implements IMenuService {
 			.andHasChildEqualTo(true);
 		return menuMapper.selectByExample(example);
 	}
+	
+	public void save(Menu menu) {
+		logger.debug("insert {} into Menu", menu.getName());
+		menuMapper.insert(menu);
+	}
 }

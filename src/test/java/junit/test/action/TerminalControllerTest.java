@@ -68,7 +68,7 @@ public class TerminalControllerTest {
 		ResultActions ra = this.mockMvc.perform(MockMvcRequestBuilders
 				.post("/menu/1.json"));//.accept(MediaType.APPLICATION_XML));
 		MvcResult mr = ra.andReturn();
-		assertNotNull(mr.getModelAndView().getModelMap().get("Menu"));
+		assertNotNull(mr.getModelAndView().getModelMap().get("menus"));
 		assertEquals(200, mr.getResponse().getStatus());
 	}
 	

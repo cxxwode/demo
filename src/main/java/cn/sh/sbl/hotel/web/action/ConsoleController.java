@@ -8,6 +8,7 @@
 package cn.sh.sbl.hotel.web.action;
 
 import java.io.File;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.sh.sbl.hotel.beans.Menu;
 import cn.sh.sbl.hotel.service.IActorService;
 import cn.sh.sbl.hotel.service.IFilmService;
 import cn.sh.sbl.hotel.service.IMenuService;
@@ -45,6 +47,31 @@ public class ConsoleController {
 	@Autowired
 	private IFilmService filmService;
 	
+	/**
+	 * this method will get all menu for the menuTree
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(value={"/findAllMenu"})
+	@Transactional
+	public ModelAndView getAllMenu(ModelMap modelMap) {
+		List<Menu> menuList = this.menuService.findAll();
+		modelMap.put("menuList", menuList);
+		return new ModelAndView("menu", modelMap);
+	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(value={"/menu_c/{id}"})
+	public ModelAndView getMenu(@PathVariable("id")int id,ModelMap modelMap) {
+		Menu menu = this.menuService.get(id);
+		modelMap.put("menu_c", menu);
+		return new ModelAndView("menu", modelMap);
+	}
 	
 	/**
 	 * this is test url pattern is a template
@@ -97,6 +124,8 @@ public class ConsoleController {
 		}
 		return new ModelAndView("upload", modelMap);
 	}
+	
+	
 	
 }
 

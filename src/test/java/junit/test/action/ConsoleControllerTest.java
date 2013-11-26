@@ -55,7 +55,29 @@ public class ConsoleControllerTest {
 		mockMvc = MockMvcBuilders.standaloneSetup(consoleController).build();
 		
 	}
-
+	
+	@Test
+	@Transactional
+	public void testAddMenu() throws Exception {
+		ResultActions ra = this.mockMvc.perform(MockMvcRequestBuilders
+				.post("/menu_c/1.json"));//.accept(MediaType.APPLICATION_XML));
+		MvcResult mr = ra.andReturn();
+		assertNotNull(mr.getModelAndView().getModelMap().get("menu_c"));
+		assertEquals(200, mr.getResponse().getStatus());
+	}
+	
+	@Test
+	@Transactional
+	public void testGetSimpleMenu_c() throws Exception {
+		ResultActions ra = this.mockMvc.perform(MockMvcRequestBuilders
+				.post("/menu_c/1.json"));//.accept(MediaType.APPLICATION_XML));
+		MvcResult mr = ra.andReturn();
+		assertNotNull(mr.getModelAndView().getModelMap().get("menu_c"));
+		assertEquals(200, mr.getResponse().getStatus());
+	}
+	
+	
+	
 	@Test
 	@Transactional
 	public void testUpload() throws Exception {
