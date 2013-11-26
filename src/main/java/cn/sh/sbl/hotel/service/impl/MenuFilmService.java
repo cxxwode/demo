@@ -23,6 +23,7 @@ import cn.sh.sbl.hotel.dao.FilmMapper;
 import cn.sh.sbl.hotel.dao.MenuFilmMapper;
 import cn.sh.sbl.hotel.dao.MenuMapper;
 import cn.sh.sbl.hotel.service.IMenuFilmService;
+import cn.sh.sbl.hotel.vo.FilmVo;
 
 /**
  * @author samsung 
@@ -64,6 +65,11 @@ public class MenuFilmService implements IMenuFilmService {
 		
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see cn.sh.sbl.hotel.service.IMenuFilmService#findFilmByMenuId(int)
+	 * 由菜单id返回电影列表
+	 */
 	public List<Film> findFilmByMenuId(int menuid) {
 		List<MenuFilm> menuFilms = this.getMenuFilmByMenuId(menuid);
 		List<Film> films = new ArrayList<Film>();
@@ -74,6 +80,22 @@ public class MenuFilmService implements IMenuFilmService {
 		}
 		logger.debug("================{}",films.size());
 		return films;
+	}
+	
+	public List<FilmVo> findFilmVoByMenuId(int menuid) {
+		List<MenuFilm> menuFilms = this.getMenuFilmByMenuId(menuid);
+		
+		List<FilmVo> filmVos = new ArrayList<FilmVo>();
+		for(MenuFilm mf : menuFilms) {
+			FilmExample filmExample = new FilmExample();
+			filmExample.createCriteria().andIdEqualTo(mf.getFilmId()).isValid();
+			Film film = this.filmMapper.selectByExample(filmExample).get(0);
+			FilmVo filmVo = new FilmVo(film.getId(), film.getCountry(), film.getDescription(), film.getLastUpdate(), film.getLength(), film.getRatings(), film.getTitle(), film.getReleaseYear());
+			
+			filmVos.add(filmVo);
+			
+		}
+		return filmVos;
 	}
 }
 

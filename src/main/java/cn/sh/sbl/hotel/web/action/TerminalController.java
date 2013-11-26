@@ -8,7 +8,6 @@
 package cn.sh.sbl.hotel.web.action;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -26,7 +25,9 @@ import cn.sh.sbl.hotel.beans.Film;
 import cn.sh.sbl.hotel.beans.Menu;
 import cn.sh.sbl.hotel.beans.MenuFilm;
 import cn.sh.sbl.hotel.service.IActorService;
+import cn.sh.sbl.hotel.service.IFileService;
 import cn.sh.sbl.hotel.service.IFilmService;
+import cn.sh.sbl.hotel.service.IMenuFilmService;
 import cn.sh.sbl.hotel.service.IMenuService;
 import cn.sh.sbl.hotel.vo.ActorVo;
 import cn.sh.sbl.hotel.vo.FileList;
@@ -53,6 +54,13 @@ public class TerminalController {
 	private IMenuService menuService;
 	@Autowired
 	private IFilmService filmService;
+	@Autowired
+	private IMenuFilmService menuFilmService;
+	@Autowired
+	private IFileService fileService;
+	
+	
+	
 	/**
 	 * this is test url pattern is a template
 	 * @param modelMap
@@ -94,9 +102,19 @@ public class TerminalController {
 	@Transactional
 	public ModelAndView getFilms(@PathVariable("id")int id, ModelMap modelMap) {
 		// TODO 需要实现根据菜单编号, 查询该菜单下绑定的影片列表(需要校验只有不包含子菜单的的菜单), 需返回影片的描述信息, 及海报路径
-		Menu presentMenu = this.menuService.get(id);
-		logger.debug("{}菜单{}合法{}子节点",presentMenu.getName(),presentMenu.getValid(),!presentMenu.getHasChild());
+		//Menu presentMenu = this.menuService.get(id);
+		//logger.debug("{}菜单{}合法{}子节点",presentMenu.getName(),presentMenu.getValid(),!presentMenu.getHasChild());
 		
+		List<FilmVo> filmVos = new ArrayList<FilmVo>();
+		List<Film> films = this.menuFilmService.findFilmByMenuId(id);
+		for(Film f : films) {
+			logger.debug("{}====",films.size());
+			FilmVo filmVo = new FilmVo(f.getId(), f.getTitle());
+			List<File> files = this.fileService.findFileByFilmId(f.getId());
+			filmVo.setFileList(new FileList(files));
+			filmVos.add(filmVo);
+		}
+		modelMap.put("film", filmVos);
 		return new ModelAndView("films", modelMap);
 	}
 	
