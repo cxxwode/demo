@@ -25,7 +25,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.sh.sbl.hotel.beans.Menu;
-import cn.sh.sbl.hotel.service.IActorService;
 import cn.sh.sbl.hotel.service.IFilmService;
 import cn.sh.sbl.hotel.service.IMenuService;
 
@@ -40,8 +39,6 @@ import cn.sh.sbl.hotel.service.IMenuService;
 public class ConsoleController {
 	@Autowired
 	private Logger logger;
-	@Autowired
-	private IActorService actorService;
 	@Autowired
 	private IMenuService menuService;
 	@Autowired

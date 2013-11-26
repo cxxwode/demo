@@ -10,7 +10,6 @@ package junit.test.action;
 import static org.junit.Assert.*;
 
 import java.io.File;
-import java.io.FileInputStream;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -83,8 +82,8 @@ public class ConsoleControllerTest {
 	public void testUpload() throws Exception {
 		String originalFilename = "jetty-distribution-9.1.0.v20131115.tar.gz";
 		MockMultipartFile mockMultipartFile = new MockMultipartFile(
-				"file", originalFilename, "application/octet-stream", 
-				new FileInputStream("/opt/local/" + originalFilename));
+				"file", originalFilename, "application/octet-stream", originalFilename.getBytes());
+//				new FileInputStream("/opt/local/" + originalFilename));
 		MockMultipartHttpServletRequestBuilder builder =
 				MockMvcRequestBuilders.fileUpload("/upload/jsl.json").file(mockMultipartFile);
 		ResultActions ra = this.mockMvc.perform(builder);//.sessionAttr("servletContext", mockServletContext));

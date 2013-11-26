@@ -9,7 +9,6 @@ package cn.sh.sbl.hotel.service;
 
 import java.util.List;
 
-import cn.sh.sbl.hotel.beans.Actor;
 import cn.sh.sbl.hotel.beans.Menu;
 
 /**

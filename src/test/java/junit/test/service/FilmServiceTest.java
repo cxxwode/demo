@@ -55,14 +55,14 @@ public class FilmServiceTest {
 		posterFile.setFilmId(film.getId());
 		posterFile.setFileName("asdfk.png");
 		posterFile.setCategoryFilm(14);
-		posterFile.setFileSize("asodifas");
+		posterFile.setFileSize(239423L);
 		list.add(posterFile);
 		
 		File contentFile = new File();
 		contentFile.setFilmId(film.getId());
 		contentFile.setFileName("asdfk.ts");
 		contentFile.setCategoryFilm(13);
-		contentFile.setFileSize("a3242fas");
+		contentFile.setFileSize(234555L);
 		list.add(contentFile);
 		this.filmService.addFilm(film, list);
 		assertEquals(film.getTitle(), this.filmService.get(film.getId()).getTitle());
@@ -80,13 +80,13 @@ public class FilmServiceTest {
 		posterFile.setFilmId(film.getId());
 		posterFile.setFileName("4sdfk.png");
 		posterFile.setCategoryFilm(14);
-		posterFile.setFileSize("a4odifas");
+		posterFile.setFileSize(4334534L);
 		list.add(posterFile);
 		
 		File contentFile = new File();
 		contentFile.setFileName("asdfk.ts");
 		contentFile.setCategoryFilm(13);
-		contentFile.setFileSize("NaN"); 
+		contentFile.setFileSize(34543534L); 
 		list.add(contentFile);
 		this.filmService.addFilm(film, list);
 	}

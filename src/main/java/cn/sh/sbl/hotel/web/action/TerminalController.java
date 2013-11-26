@@ -19,23 +19,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import cn.sh.sbl.hotel.beans.Actor;
 import cn.sh.sbl.hotel.beans.File;
 import cn.sh.sbl.hotel.beans.Film;
 import cn.sh.sbl.hotel.beans.Menu;
-import cn.sh.sbl.hotel.beans.MenuFilm;
-import cn.sh.sbl.hotel.service.IActorService;
 import cn.sh.sbl.hotel.service.IFileService;
 import cn.sh.sbl.hotel.service.IFilmService;
 import cn.sh.sbl.hotel.service.IMenuFilmService;
 import cn.sh.sbl.hotel.service.IMenuService;
-import cn.sh.sbl.hotel.vo.ActorVo;
 import cn.sh.sbl.hotel.vo.FileList;
-import cn.sh.sbl.hotel.vo.FileVo;
 import cn.sh.sbl.hotel.vo.FilmList;
 import cn.sh.sbl.hotel.vo.FilmVo;
-import cn.sh.sbl.hotel.vo.MenuVo;
-import cn.sh.sbl.hotel.vo.MenuList;
 
 /**
  * @author bunco 
@@ -48,8 +41,6 @@ import cn.sh.sbl.hotel.vo.MenuList;
 public class TerminalController {
 	@Autowired
 	private Logger logger;
-	@Autowired
-	private IActorService actorService;
 	@Autowired
 	private IMenuService menuService;
 	@Autowired
@@ -68,9 +59,6 @@ public class TerminalController {
 	@RequestMapping(value={"/test"})
 	@Transactional
 	public ModelAndView demo(ModelMap modelMap) {
-		Actor actor = this.actorService.get(1);
-		ActorVo actorVo = new ActorVo();
-		modelMap.put("Actor", actorVo);
 		return new ModelAndView("hello", modelMap);
 	}
 	

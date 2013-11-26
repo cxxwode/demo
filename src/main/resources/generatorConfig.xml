@@ -22,7 +22,7 @@
 <!--         </commentGenerator> -->
         
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://10.37.140.186:3306/demo" userId="root" password="root" />
+			connectionURL="jdbc:mysql://10.0.2.2:3306/demo" userId="root" password="" />
 
 		<!-- 指定生成的类型为java类型，避免数据库中number等类型字段 -->
 		<javaTypeResolver>
@@ -46,13 +46,6 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
-		<table tableName="actor" domainObjectName="Actor" >
-		    <!-- 返回新增记录ID值 -->  
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-		</table>
-		<table tableName="director" domainObjectName="Director">
-		    <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-		</table>
 		<table tableName="category" domainObjectName="Category">
 		    <generatedKey column="id" sqlStatement="MySql" identity="true"/>
 		</table>
@@ -63,11 +56,6 @@
 		    <generatedKey column="id" sqlStatement="MySql" identity="true"/>
 		</table>
 		<table tableName="film" domainObjectName="Film" />
-		<table tableName="film" domainObjectName="Film" />
-		<table tableName="film_actor" domainObjectName="FilmActor"/>
-		<table tableName="film_director" domainObjectName="FilmDirector"/>
-		<table tableName="film_genre" domainObjectName="FilmGenre"/>
-		<table tableName="film_language" domainObjectName="FilmLanguage"/>
 		<table tableName="menu_film" domainObjectName="MenuFilm"/>
 	</context>
 </generatorConfiguration> 

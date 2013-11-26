@@ -9,8 +9,6 @@ package cn.sh.sbl.hotel.vo;
 
 import java.util.Date;
 
-import javax.xml.bind.annotation.XmlElement;
-
 /**
  * @author samsung 
  * @E-mail: cxxwode@163.com

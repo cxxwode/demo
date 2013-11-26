@@ -12,8 +12,6 @@ import java.util.Date;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import cn.sh.sbl.hotel.beans.Film;
-
 /**
  * @author bunco 
  * @E-mail: bunco.hb@gmail.com
@@ -80,7 +78,7 @@ public class FilmVo {
 		this.title = fileTitle;
 	}
 	
-	public FilmVo(String filmId, String country, String decription, Date lastUpdate, 
+	public FilmVo(String filmId, String country, String description, Date lastUpdate, 
 			short length, String ratings, String title, Date releaseYear) {
 		this.id = filmId;
 		this.country = country;
