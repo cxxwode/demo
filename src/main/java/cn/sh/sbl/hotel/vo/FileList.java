@@ -10,6 +10,9 @@ package cn.sh.sbl.hotel.vo;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import cn.sh.sbl.hotel.beans.File;
 
 /**
  * @author bunco 
@@ -18,27 +21,27 @@ import javax.xml.bind.annotation.XmlElement;
  * @date 2013-11-23 下午6:06:04
  * @description TODO
  */
+@XmlRootElement(name="files")
 public class FileList {
-	private List<FileVo> fileVos;
-	
-	public FileList() {}
-	
-	public FileList(List<FileVo> fileVos) {
-		this.fileVos = fileVos;
+	private List<File> files;
+
+	public FileList() {
+		
 	}
-	/** 
-	 * 获取 fileVos 
-	 * @return fileVos fileVos 
-	 */
+	
+	public FileList(List<File> files) {
+		this.files = files;
+	}
+	
 	@XmlElement(name="file")
-	public List<FileVo> getFileVos() {
-		return fileVos;
+	public List<File> getFiles() {
+		return files;
 	}
-	/** 
-	 * 设置 fileVos 
-	 * @param fileVos fileVos 
-	 */
-	public void setFileVos(List<FileVo> fileVos) {
-		this.fileVos = fileVos;
+
+	public void setFiles(List<File> files) {
+		this.files = files;
 	}
+	
+	
+
 }

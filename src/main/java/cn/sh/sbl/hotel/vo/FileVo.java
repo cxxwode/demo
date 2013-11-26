@@ -25,17 +25,6 @@ public class FileVo {
 	 */
 	private int fileId;
 	
-	/**
-	 * The id of the film
-	 */
-	private String filmId;
-	
-
-	/** 
-	 * The file type of the films.
-	 */
-	private CategoryVo categoryVo;
-
 	/** 
 	 * The name of the file.
 	 */
@@ -56,14 +45,6 @@ public class FileVo {
 	 */
 	private String remark;
 
-	@XmlElement(name="fileType")
-	public CategoryVo getCategoryVo() {
-		return categoryVo;
-	}
-
-	public void setCategoryVo(CategoryVo categoryVo) {
-		this.categoryVo = categoryVo;
-	}
 
 	public String getFileName() {
 		return fileName;
@@ -113,20 +94,5 @@ public class FileVo {
 		this.fileId = fileId;
 	}
 
-	/** 
-	 * 获取 Theidofthefilm 
-	 * @return filmId Theidofthefilm 
-	 */
-	public String getFilmId() {
-		return filmId;
-	}
-
-	/** 
-	 * 设置 Theidofthefilm 
-	 * @param filmId Theidofthefilm 
-	 */
-	public void setFilmId(String filmId) {
-		this.filmId = filmId;
-	}
 }
 

@@ -9,6 +9,9 @@ package junit.test.service;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,8 +21,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import cn.sh.sbl.hotel.beans.File;
+import cn.sh.sbl.hotel.beans.Film;
+import cn.sh.sbl.hotel.service.IFileService;
 import cn.sh.sbl.hotel.service.IMenuFilmService;
 import cn.sh.sbl.hotel.service.IMenuService;
+import cn.sh.sbl.hotel.vo.FileList;
+import cn.sh.sbl.hotel.vo.FilmVo;
 
 /**
  * @author samsung 
@@ -40,6 +48,8 @@ public class MenuTest {
 	private IMenuService menuService;
 	@Autowired
 	private IMenuFilmService menuFilmService;
+	@Autowired
+	private IFileService fileService;
 	
 	@Test
 	public void testFindMenuByParentId() {
@@ -54,9 +64,26 @@ public class MenuTest {
 		assertTrue(0 < this.menuFilmService.getMenuFilmByMenuId(2).size());
 	}
 	
+	@Ignore
 	@Test
 	public void testFindFilmByMenuId() {
 		assertTrue(0 < this.menuFilmService.findFilmByMenuId(2).size());
+	}
+	
+	@Test
+	public void testFindFilmByMenuId_1() {
+		List<FilmVo> filmVos = new ArrayList<FilmVo>();
+		List<Film> films = this.menuFilmService.findFilmByMenuId(2);
+		for(Film f : films) {
+			logger.debug("{}====",films.size());
+			FilmVo filmVo = new FilmVo(f.getId(), f.getTitle());
+			List<File> files = this.fileService.findFileByFilmId(f.getId());
+			logger.debug("{}{}====",f.getTitle(),files.size());
+			filmVo.setFileList(new FileList(files));
+			filmVos.add(filmVo);
+		}
+		
+		assertTrue(0 < filmVos.size());
 	}
 }
 
