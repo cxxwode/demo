@@ -46,5 +46,32 @@ public class MenuService implements IMenuService {
 	public void save(Menu menu) {
 		logger.debug("insert {} into Menu", menu.getName());
 		menuMapper.insert(menu);
+		Menu parentMenu = menuMapper.selectByPrimaryKey(menu.getParent());
+		if(!parentMenu.getHasChild())  {
+			parentMenu.setHasChild(true);
+			menuMapper.updateByPrimaryKey(parentMenu);
+		}
+	}
+
+	public void deleteMenu(Menu menu) {
+		//TODO 判断父菜单的状态更新
+		//TODO 判断是否含节目
+		//TODO 菜单栏目图标删除
+		
+		menuMapper.deleteByPrimaryKey(menu.getId());
+		
+		MenuExample menuExample = new MenuExample();
+		menuExample.createCriteria()
+			.andParentEqualTo(menu.getParent())
+			.andIdNotEqualTo(menu.getId())
+			.andValidEqualTo(true);
+		List<Menu> sameLevelMenu = menuMapper.selectByExample(menuExample);
+		
+		if(sameLevelMenu.size() < 1) {
+			Menu pMenu = menuMapper.selectByPrimaryKey(menu.getParent());
+			pMenu.setHasChild(false);
+			menuMapper.updateByPrimaryKey(pMenu);
+		}
+		
 	}
 }

@@ -110,6 +110,13 @@ public class ConsoleController {
 			upload(realPath, icon);
 			upload(realPath, focusIcon);
 			// TODO new Menu()  to save
+			Menu menu = new Menu();
+			menu.setName(name);
+			menu.setIcon(realPath + "/upload/" + icon.getOriginalFilename());
+			menu.setFocusIcon(realPath + "/upload/" + icon.getOriginalFilename());
+			menu.setParent(parent);
+			menu.setPath("");
+			menuService.save(menu);
 //			this.menuService.save(menu);
 			modelMap.put(RETURN_STATUS, "OK");
 		} catch (IllegalArgumentException e) {

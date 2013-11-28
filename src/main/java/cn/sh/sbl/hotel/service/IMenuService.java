@@ -27,5 +27,7 @@ public interface IMenuService {
 	public List<Menu> getChildrenById(int id);
 	
 	public void save(Menu menu);
+	
+	public void deleteMenu(Menu menu);
 
 }
