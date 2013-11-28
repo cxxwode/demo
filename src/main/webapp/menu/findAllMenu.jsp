@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'MainConsole.jsp' starting page</title>
+    <title>findAllMenu.jsp</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -19,7 +19,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-	<link rel="StyleSheet" href="css/zTreeStyle/zTreeStyle.css" type="text/css" />
+	<link rel="StyleSheet" href="../css/zTreeStyle/zTreeStyle.css" type="text/css" />
 	 <style>
 	body {
 	background-color: white;
@@ -46,8 +46,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</TR>
 </TABLE>
   </body>
-  <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
-  <script type="text/javascript" src="js/jquery.ztree.all-3.5.min.js"></script>
+  <script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript" src="../js/jquery.ztree.all-3.5.min.js"></script>
   <SCRIPT type="text/javascript" >
   <!--
 	var zTree;
@@ -98,6 +98,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		{id:303, pId:3, name:"菜单节目查询", file:"menufilm/queryMenuFilm"},
 		
 		{id:4, pId:0, name:"菜单节目管理", file:"menu_c/findAllMenu"},
+		
 	];
 
 	$(document).ready(function(){

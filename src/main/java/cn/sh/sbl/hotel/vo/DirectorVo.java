@@ -16,7 +16,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @date 2013-11-23 下午2:19:49
  * @description TODO
  */
-@XmlRootElement(name="Director")
 public class DirectorVo {
 	/** 
 	 * The id of the director.

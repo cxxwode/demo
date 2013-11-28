@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.sh.sbl.hotel.beans.Film;
 import cn.sh.sbl.hotel.beans.Menu;
 import cn.sh.sbl.hotel.service.IFilmService;
 import cn.sh.sbl.hotel.service.IMenuService;
@@ -44,12 +46,13 @@ public class ConsoleController {
 	@Autowired
 	private IFilmService filmService;
 	
+
 	/**
 	 * this method will get all menu for the menuTree
 	 * @param modelMap
 	 * @return
 	 */
-	@RequestMapping(value={"/findAllMenu"})
+	@RequestMapping(value={"/menu_c/findAllMenu"})
 	@Transactional
 	public ModelAndView getAllMenu(ModelMap modelMap) {
 		List<Menu> menuList = this.menuService.findAll();
