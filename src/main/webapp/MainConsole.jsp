@@ -59,13 +59,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			showLine: true,
 			selectedMulti: false
 		},
-		data: {
-			simpleData: {
-				enable:true,
-				idKey: "id",
-				pIdKey: "pId",
-				rootPId: ""
-			}
+		async: {
+			enable: true,
+			url:"c/menu",
+			autoParam:["id"],
+			dataFilter: filter
 		},
 		callback: {
 			beforeClick: function(treeId, treeNode) {
@@ -80,6 +78,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 		}
 	};
+	
+	function filter(treeId, parentNode, childNodes) {
+		if (!childNodes) return null;
+		for (var i=0, l=childNodes.length; i<l; i++) {
+		childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+		}
+		return childNodes;
+		} 
 
 	var zNodes =[
 		{id:1, pId:0, name:"节目管理", open:true},
