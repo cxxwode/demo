@@ -71,5 +71,6 @@ public class FilmService implements IFilmService {
 		this.fileMapper.deleteByExample(example);
 		this.filmMapper.deleteByPrimaryKey(id);
 	}
+	
 }
 

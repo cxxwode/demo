@@ -20,6 +20,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import cn.sh.sbl.hotel.beans.Category;
 import cn.sh.sbl.hotel.beans.File;
 import cn.sh.sbl.hotel.beans.Film;
 import cn.sh.sbl.hotel.service.ICategoryService;
@@ -49,6 +50,8 @@ public class FilmServiceTest {
 		Film film = new Film();
 		film.setId("asdfoasdf");
 		film.setTitle("july 3");
+		
+		film.setLanguage("中文");
 		
 		List<File> list = new ArrayList<File>();
 		File posterFile = new File();

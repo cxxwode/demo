@@ -57,6 +57,17 @@ public class ConsoleControllerTest {
 	
 	@Test
 	@Transactional
+	public void testGetAllMenu()throws Exception {
+		ResultActions ra = this.mockMvc.perform(MockMvcRequestBuilders
+				.post("/findAllMenu"));//.accept(MediaType.APPLICATION_XML));
+		MvcResult mr = ra.andReturn();
+		assertNotNull(mr.getModelAndView().getModelMap().get("menuList"));
+		assertEquals(200, mr.getResponse().getStatus());
+	}
+	
+	@Ignore
+	@Test
+	@Transactional
 	public void testAddMenu() throws Exception {
 		ResultActions ra = this.mockMvc.perform(MockMvcRequestBuilders
 				.post("/menu_c/1.json"));//.accept(MediaType.APPLICATION_XML));
@@ -77,6 +88,7 @@ public class ConsoleControllerTest {
 	
 	
 	
+	@Ignore
 	@Test
 	@Transactional
 	public void testUpload() throws Exception {
