@@ -69,6 +69,10 @@ public class FilmVo {
 	
 	private FileList fileList;
 	
+	private String actor;
+	
+	private String director;
+	
 	public FilmVo(){
 		
 	}
@@ -171,6 +175,20 @@ public class FilmVo {
 		this.remark = remark;
 	}
 
-	
-	
+	public String getActor() {
+		return actor;
+	}
+
+	public void setActor(String actor) {
+		this.actor = actor;
+	}
+
+	public String getDirector() {
+		return director;
+	}
+
+	public void setDirector(String director) {
+		this.director = director;
+	}
+
 }

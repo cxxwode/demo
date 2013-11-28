@@ -8,17 +8,21 @@
 package cn.sh.sbl.hotel.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import cn.sh.sbl.hotel.beans.Film;
 import cn.sh.sbl.hotel.beans.FilmExample;
+import cn.sh.sbl.hotel.beans.Menu;
 import cn.sh.sbl.hotel.beans.MenuExample;
 import cn.sh.sbl.hotel.beans.MenuFilm;
 import cn.sh.sbl.hotel.beans.MenuFilmExample;
+import cn.sh.sbl.hotel.beans.MenuFilmKey;
 import cn.sh.sbl.hotel.dao.FilmMapper;
 import cn.sh.sbl.hotel.dao.MenuFilmMapper;
 import cn.sh.sbl.hotel.dao.MenuMapper;
@@ -44,13 +48,26 @@ public class MenuFilmService implements IMenuFilmService {
 	@Autowired
 	private FilmMapper filmMapper;
 	
+	/**
+	 * 按联合主键查找
+	 * @param menuFilmKey
+	 * @return
+	 */
+	public MenuFilm getByPrimarryKey(MenuFilmKey menuFilmKey){
+		return menuFilmMapper.selectByPrimaryKey(menuFilmKey);
+	}
+	
+	/**
+	 * 查找全部MenuFilm
+	 */
 	public List<MenuFilm> findAll() {
-		// TODO Auto-generated method stub
 		return this.menuFilmMapper.selectByExample(null);
 	}
 
+	/**
+	 * 查找菜单下全部MenuFilm
+	 */
 	public List<MenuFilm> getMenuFilmByMenuId(int menuid) {
-		// TODO Auto-generated method stub
 		MenuExample menuExample = new MenuExample();
 		menuExample.createCriteria().andIdEqualTo(menuid)
 			.andValidEqualTo(true)
@@ -62,9 +79,55 @@ public class MenuFilmService implements IMenuFilmService {
 		}else {
 			return null;
 		}
-		
 	}
 
+	/**
+	 * 添加菜单节目关系
+	 * @param menu
+	 * @param films 可以批量添加节目到菜单
+	 */
+	@Transactional(rollbackFor=RuntimeException.class)
+	public void addMenuFilm(Menu menu, List<Film> films) {
+		if(menu.getValid() && !menu.getHasChild()) {
+			for(Film f : films) {
+				MenuFilm menuFilm = new MenuFilm();
+				menuFilm.setMenuId(menu.getId());
+				menuFilm.setFilmId(f.getId());
+				menuFilm.setLastUpdate(new Date());
+				if(!isMenuFilmExist(menu.getId(), f.getId())) {
+					menuFilmMapper.insert(menuFilm);
+					logger.info("添加节目{{}}到{{}}菜单下成功！",f.getTitle(),menu.getName());
+				} else {
+					logger.debug("添加节目{{}}到{{}}菜单下失败,该节目已经在该菜单下！",f.getTitle(),menu.getName());
+					continue;
+				}
+			}
+		} else {
+			logger.error("请检查菜单{{}}是否合法或是否为叶子菜单！",menu.getName());
+		}
+	}
+	
+	/**
+	 * 检查某个节目是否与菜单已经存在关系
+	 * @param menuId
+	 * @param filmId
+	 * @return
+	 */
+	public boolean isMenuFilmExist(int menuId, String filmId) {
+		MenuFilmKey key = new MenuFilmKey();
+		key.setMenuId(menuId);
+		key.setFilmId(filmId);
+		return menuFilmMapper.selectByPrimaryKey(key) == null ? false : true;
+	}
+
+	/**
+	 * 删除节目栏目关系
+	 */
+	public void deleteMenuFilm(MenuFilm menuFilm) {
+		menuFilmMapper.deleteByPrimaryKey(menuFilm);
+		logger.info("删除栏目节目关系{menuId,filmId} = {{} , {}}", menuFilm.getMenuId(), menuFilm.getFilmId());
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * @see cn.sh.sbl.hotel.service.IMenuFilmService#findFilmByMenuId(int)
@@ -82,20 +145,20 @@ public class MenuFilmService implements IMenuFilmService {
 		return films;
 	}
 	
+	
 	public List<FilmVo> findFilmVoByMenuId(int menuid) {
 		List<MenuFilm> menuFilms = this.getMenuFilmByMenuId(menuid);
-		
 		List<FilmVo> filmVos = new ArrayList<FilmVo>();
 		for(MenuFilm mf : menuFilms) {
 			FilmExample filmExample = new FilmExample();
 			filmExample.createCriteria().andIdEqualTo(mf.getFilmId()).isValid();
 			Film film = this.filmMapper.selectByExample(filmExample).get(0);
 			FilmVo filmVo = new FilmVo(film.getId(), film.getCountry(), film.getDescription(), film.getLastUpdate(), film.getLength(), film.getRatings(), film.getTitle(), film.getReleaseYear());
-			
 			filmVos.add(filmVo);
-			
 		}
 		return filmVos;
 	}
+
+	
 }
 

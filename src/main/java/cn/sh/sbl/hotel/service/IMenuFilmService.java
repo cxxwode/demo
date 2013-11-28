@@ -10,7 +10,9 @@ package cn.sh.sbl.hotel.service;
 import java.util.List;
 
 import cn.sh.sbl.hotel.beans.Film;
+import cn.sh.sbl.hotel.beans.Menu;
 import cn.sh.sbl.hotel.beans.MenuFilm;
+import cn.sh.sbl.hotel.beans.MenuFilmKey;
 
 /**
  * @author samsung 
@@ -21,10 +23,16 @@ import cn.sh.sbl.hotel.beans.MenuFilm;
  */
 public interface IMenuFilmService {
 	
+	public MenuFilm getByPrimarryKey(MenuFilmKey menuFilmKey);
+	
 	public List<MenuFilm> findAll();
 	
 	public List<MenuFilm> getMenuFilmByMenuId(int menuid);
 	
 	public List<Film> findFilmByMenuId(int menuid);
+	
+	public void addMenuFilm(Menu menu, List<Film> films);
+	
+	public void deleteMenuFilm(MenuFilm menuFilm);
 }
 
