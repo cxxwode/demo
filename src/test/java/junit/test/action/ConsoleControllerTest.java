@@ -141,4 +141,12 @@ public class ConsoleControllerTest {
 		assertTrue(resource.getFile().exists());
 	}
 
+	@Test
+	public void testRenameMenu() throws Exception {
+		ResultActions ra = this.mockMvc.perform(MockMvcRequestBuilders
+				.post("/c/menu/rename/8/iwodsl.json"));//.accept(MediaType.APPLICATION_XML));
+		MvcResult mr = ra.andReturn();
+		assertEquals("OK", mr.getModelAndView().getModelMap().get(ConsoleController.RETURN_STATUS));
+		assertEquals(200, mr.getResponse().getStatus());
+	} 
 }

@@ -28,4 +28,5 @@ public interface IMenuService {
 	
 	public void save(Menu menu);
 
+	public void rename(Menu menu);
 }

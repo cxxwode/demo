@@ -47,4 +47,9 @@ public class MenuService implements IMenuService {
 		logger.debug("insert {} into Menu", menu.getName());
 		menuMapper.insert(menu);
 	}
+	
+	public void rename(Menu menu) {
+		logger.debug("new Name: {}", menu.getName());
+		this.menuMapper.updateByPrimaryKey(menu);
+	}
 }
