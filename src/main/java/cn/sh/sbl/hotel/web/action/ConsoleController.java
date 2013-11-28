@@ -8,6 +8,7 @@
 package cn.sh.sbl.hotel.web.action;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.sh.sbl.hotel.beans.Film;
 import cn.sh.sbl.hotel.beans.Menu;
 import cn.sh.sbl.hotel.service.IFilmService;
 import cn.sh.sbl.hotel.service.IMenuService;
@@ -49,11 +51,13 @@ public class ConsoleController {
 	@Autowired
 	private IFilmService filmService;
 	
+
 	/**
 	 * this method will get all menu for the menuTree
 	 * @param modelMap
 	 * @return
 	 */
+
 	@RequestMapping(value={"/menu/all"})
 	@Transactional
 	public ModelAndView getAllMenu(ModelMap modelMap) {
@@ -88,7 +92,9 @@ public class ConsoleController {
 	public ModelAndView addMenu(@RequestParam("icon")MultipartFile icon, 
 			@RequestParam("focusIcon")MultipartFile focusIcon, 
 			@RequestParam("name")String name, 
-			@RequestParam("parent")Integer parent, ModelMap modelMap) {
+			@RequestParam("parent")Integer parent, 
+			HttpServletRequest request,
+			ModelMap modelMap) {
 		logger.debug("name: {}", name);
 		logger.debug("file original name: {}, name: {}, size: {}, type: {}", 
 				icon.getOriginalFilename(), icon.getName(),
@@ -96,9 +102,13 @@ public class ConsoleController {
 		logger.debug("file original name: {}, name: {}, size: {}, type: {}", 
 				focusIcon.getOriginalFilename(), focusIcon.getName(),
 				focusIcon.getSize(), focusIcon.getContentType());
+		
+		String realPath = request.getSession().getServletContext().getRealPath("/");  
 		try {
 			Assert.notNull(parent);
 			// TODO save file to path
+			upload(realPath, icon);
+			upload(realPath, focusIcon);
 			// TODO new Menu()  to save
 //			this.menuService.save(menu);
 			modelMap.put(RETURN_STATUS, "OK");
@@ -112,6 +122,40 @@ public class ConsoleController {
 	
 	public Object updateMenu() {
 		return null;
+	}
+	
+	
+	public String upload(String realPath, MultipartFile mf) {
+		if(mf.isEmpty()) {
+			logger.debug("empty file: {}!", mf);
+			return "empty file: " + mf;
+		}else {
+			logger.debug("file original name: {}, name: {}, size: {}, type: {}", 
+					mf.getOriginalFilename(), mf.getName(),
+					mf.getSize(), mf.getContentType());
+			
+			File destFile = new File(realPath + "/upload/" + mf.getOriginalFilename());
+			if (!destFile.getParentFile().exists()) {
+				logger.info("This is first upload, make parent dir: {}, canRead: {}, canWrite: {}, canExecute: {}", 
+						destFile.getParentFile().mkdirs(), destFile.getParentFile().setReadable(true, false) 
+							&& destFile.getParentFile().canRead(),
+						destFile.getParentFile().setWritable(true, false) 
+							&& destFile.getParentFile().canWrite(),
+						destFile.getParentFile().setExecutable(true, false)
+							&& destFile.getParentFile().canExecute());
+			}
+			try {
+				mf.transferTo(destFile);
+				return mf + "upload success!";
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				logger.error("", e);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return "success";
 	}
 	
 	/**
