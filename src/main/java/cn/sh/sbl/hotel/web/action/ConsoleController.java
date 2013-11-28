@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,7 +38,10 @@ import cn.sh.sbl.hotel.service.IMenuService;
  * @description TODO
  */
 @Controller
+@RequestMapping("/c")
 public class ConsoleController {
+	public static final String RETURN_STATUS = "status";
+	public static final String RETURN_ERROR_MSG = "errMsg";
 	@Autowired
 	private Logger logger;
 	@Autowired
@@ -49,7 +54,7 @@ public class ConsoleController {
 	 * @param modelMap
 	 * @return
 	 */
-	@RequestMapping(value={"/findAllMenu"})
+	@RequestMapping(value={"/menu/all"})
 	@Transactional
 	public ModelAndView getAllMenu(ModelMap modelMap) {
 		List<Menu> menuList = this.menuService.findAll();
@@ -58,16 +63,55 @@ public class ConsoleController {
 	}
 	
 	/**
-	 * 
+	 * 获取指定菜单信息
 	 * @param id
 	 * @param modelMap
 	 * @return
 	 */
-	@RequestMapping(value={"/menu_c/{id}"})
+	@RequestMapping(value={"/menu/{id}"})
 	public ModelAndView getMenu(@PathVariable("id")int id,ModelMap modelMap) {
 		Menu menu = this.menuService.get(id);
 		modelMap.put("menu_c", menu);
 		return new ModelAndView("menu", modelMap);
+	}
+	
+	/**
+	 * 删除菜单
+	 * @param id
+	 * @return
+	 */
+	public Object delMenu(@PathVariable("id")int id) {
+		return null;
+	}
+	
+	@RequestMapping(value={"/menu/add"})
+	public ModelAndView addMenu(@RequestParam("icon")MultipartFile icon, 
+			@RequestParam("focusIcon")MultipartFile focusIcon, 
+			@RequestParam("name")String name, 
+			@RequestParam("parent")Integer parent, ModelMap modelMap) {
+		logger.debug("name: {}", name);
+		logger.debug("file original name: {}, name: {}, size: {}, type: {}", 
+				icon.getOriginalFilename(), icon.getName(),
+				icon.getSize(), icon.getContentType());
+		logger.debug("file original name: {}, name: {}, size: {}, type: {}", 
+				focusIcon.getOriginalFilename(), focusIcon.getName(),
+				focusIcon.getSize(), focusIcon.getContentType());
+		try {
+			Assert.notNull(parent);
+			// TODO save file to path
+			// TODO new Menu()  to save
+//			this.menuService.save(menu);
+			modelMap.put(RETURN_STATUS, "OK");
+		} catch (IllegalArgumentException e) {
+			logger.debug("menu parent can not be null!");
+			modelMap.put(RETURN_STATUS, "ERROR");
+			modelMap.put(RETURN_ERROR_MSG, e.getMessage());
+		}
+		return new ModelAndView("add_menu", modelMap);
+	}
+	
+	public Object updateMenu() {
+		return null;
 	}
 	
 	/**
@@ -99,7 +143,7 @@ public class ConsoleController {
 							destFile.getAbsolutePath());
 					if (!destFile.getParentFile().exists()) {
 						logger.info("This is first upload, make parent dir: {}, canRead: {}, canWrite: {}, canExecute: {}", 
-								destFile.mkdirs(), destFile.getParentFile().setReadable(true, false) 
+								destFile.getParentFile().mkdirs(), destFile.getParentFile().setReadable(true, false) 
 									&& destFile.getParentFile().canRead(),
 								destFile.getParentFile().setWritable(true, false) 
 									&& destFile.getParentFile().canWrite(),
@@ -122,7 +166,10 @@ public class ConsoleController {
 		return new ModelAndView("upload", modelMap);
 	}
 	
-	
+	@RequestMapping(value={"/films/all"})
+	public ModelAndView getAllFilm(ModelMap modelMap) {
+		return new ModelAndView("", modelMap);
+	}
 	
 }
 

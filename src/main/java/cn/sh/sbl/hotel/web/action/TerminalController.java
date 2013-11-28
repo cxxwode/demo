@@ -38,6 +38,7 @@ import cn.sh.sbl.hotel.vo.FilmVo;
  * @description defined all of the terminal visit interface to access data object
  */
 @Controller
+@RequestMapping("/t")
 public class TerminalController {
 	@Autowired
 	private Logger logger;

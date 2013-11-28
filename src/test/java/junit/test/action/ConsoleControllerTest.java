@@ -10,6 +10,7 @@ package junit.test.action;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -17,6 +18,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -27,7 +31,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
 
 import cn.sh.sbl.hotel.web.action.ConsoleController;
 
@@ -56,31 +59,55 @@ public class ConsoleControllerTest {
 	}
 	
 	@Test
-	@Transactional
 	public void testGetAllMenu()throws Exception {
 		ResultActions ra = this.mockMvc.perform(MockMvcRequestBuilders
-				.post("/findAllMenu"));//.accept(MediaType.APPLICATION_XML));
+				.post("/c/menu/all.json"));//.accept(MediaType.APPLICATION_XML));
 		MvcResult mr = ra.andReturn();
 		assertNotNull(mr.getModelAndView().getModelMap().get("menuList"));
 		assertEquals(200, mr.getResponse().getStatus());
 	}
 	
-	@Ignore
 	@Test
-	@Transactional
-	public void testAddMenu() throws Exception {
-		ResultActions ra = this.mockMvc.perform(MockMvcRequestBuilders
-				.post("/menu_c/1.json"));//.accept(MediaType.APPLICATION_XML));
+	public void testAddMenuFailed() throws Exception {
+		String iconFileName = "icon.png";
+		String focusIconFileName = "icon_focus.png";
+		MockMultipartFile iconFile = new MockMultipartFile(
+				"icon", iconFileName, "application/octet-stream", 
+				new ClassPathResource(iconFileName).getInputStream());
+		MockMultipartFile focusIconFile = new MockMultipartFile(
+				"focusIcon", focusIconFileName, "application/octet-stream", 
+				new ClassPathResource(focusIconFileName).getInputStream());
+		MockMultipartHttpServletRequestBuilder builder =
+				MockMvcRequestBuilders.fileUpload("/c/menu/add.json").file(iconFile).file(focusIconFile);
+		ResultActions ra = this.mockMvc.perform(builder.param("name", "BlueMovies").param("parent", ""));
 		MvcResult mr = ra.andReturn();
-		assertNotNull(mr.getModelAndView().getModelMap().get("menu_c"));
+//		assertEquals("ERROR", mr.getModelAndView().getModelMap().get(ConsoleController.RETURN_STATUS));
 		assertEquals(200, mr.getResponse().getStatus());
 	}
 	
 	@Test
-	@Transactional
+	public void testAddMenuSuccess() throws Exception {
+		String iconFileName = "icon.png";
+		String focusIconFileName = "icon_focus.png";
+		MockMultipartFile iconFile = new MockMultipartFile(
+				"icon", iconFileName, "application/octet-stream", 
+				new ClassPathResource(iconFileName).getInputStream());
+		MockMultipartFile focusIconFile = new MockMultipartFile(
+				"focusIcon", focusIconFileName, "application/octet-stream", 
+				new ClassPathResource(focusIconFileName).getInputStream());
+		MockMultipartHttpServletRequestBuilder builder =
+				MockMvcRequestBuilders.fileUpload("/c/menu/add.json").file(iconFile).file(focusIconFile);
+		ResultActions ra = this.mockMvc.perform(builder.param("name", "BlueMovies").param("parent", "1"));
+		MvcResult mr = ra.andReturn();
+		assertEquals("OK", mr.getModelAndView().getModelMap().get(ConsoleController.RETURN_STATUS));
+		assertEquals(200, mr.getResponse().getStatus());
+	}
+	
+	@Test
+	@Ignore
 	public void testGetSimpleMenu_c() throws Exception {
 		ResultActions ra = this.mockMvc.perform(MockMvcRequestBuilders
-				.post("/menu_c/1.json"));//.accept(MediaType.APPLICATION_XML));
+				.post("/c/menu/1.json"));//.accept(MediaType.APPLICATION_XML));
 		MvcResult mr = ra.andReturn();
 		assertNotNull(mr.getModelAndView().getModelMap().get("menu_c"));
 		assertEquals(200, mr.getResponse().getStatus());
@@ -88,16 +115,14 @@ public class ConsoleControllerTest {
 	
 	
 	
-	@Ignore
 	@Test
-	@Transactional
 	public void testUpload() throws Exception {
 		String originalFilename = "jetty-distribution-9.1.0.v20131115.tar.gz";
 		MockMultipartFile mockMultipartFile = new MockMultipartFile(
 				"file", originalFilename, "application/octet-stream", originalFilename.getBytes());
 //				new FileInputStream("/opt/local/" + originalFilename));
 		MockMultipartHttpServletRequestBuilder builder =
-				MockMvcRequestBuilders.fileUpload("/upload/jsl.json").file(mockMultipartFile);
+				MockMvcRequestBuilders.fileUpload("/c/upload/jsl.json").file(mockMultipartFile);
 		ResultActions ra = this.mockMvc.perform(builder);//.sessionAttr("servletContext", mockServletContext));
 		MvcResult mr = ra.andReturn();
 		String realPath = mr.getRequest().getSession().getServletContext().getRealPath("/");
@@ -109,10 +134,11 @@ public class ConsoleControllerTest {
 		assertTrue(exists && delete);
 	}
 
-	@Ignore
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void test() throws IOException {
+		Resource resource = new ClassPathResource("NamedQuery.hbm.xml");
+		logger.debug("{}: exists: {}", resource.getFile().getAbsolutePath(), resource.getFile().exists());
+		assertTrue(resource.getFile().exists());
 	}
 
 }
