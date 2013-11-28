@@ -6,52 +6,120 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">  
 <html>  
-  <head>  
-    <base href="<%=basePath%>">  
+	<head>  
+		<link rel="stylesheet" href="css/zTreeStyle/zTreeStyle.css" type="text/css">
+		<style>
+			body {
+				background-color: white;
+				margin:0; padding:0;
+				text-align: center;
+			}
+			div, p, table, th, td {
+				list-style:none;
+				margin:0; padding:0;
+				color:#333; font-size:12px;
+				font-family:dotum, Verdana, Arial, Helvetica, AppleGothic, sans-serif;
+			}
+			#testIframe {margin-left: 10px;}
+		</style>
+ 	</head>  
+	<body>  
+		<TABLE border=0 height=600px align=left>
+			<TR>
+				<TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+					<ul id="tree" class="ztree" style="width:260px; overflow:auto;"></ul>
+				</TD>
+				<TD width=770px align=left valign=top><IFRAME ID="testIframe" Name="testIframe" FRAMEBORDER=0 SCROLLING=AUTO width=100%  height=600px></IFRAME></TD>
+			</TR>
+		</TABLE>
+	</body>  
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.10.2.min.js"></script>  
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/ajaxfileupload.js"></script>  
-  
-<script type="text/javascript">  
-function ajaxFileUpload(){  
-    //开始上传文件时显示一个图片,文件上传完成将图片隐藏  
-    //$("#loading").ajaxStart(function(){$(this).show();}).ajaxComplete(function(){$(this).hide();});  
-    //执行上传文件操作的函数  
-    $.ajaxFileUpload({  
-        //处理文件上传操作的服务器端地址(可以传参数,已亲测可用)  
-        url:'<%=request.getContextPath()%>/upload/sldf.json',  
-        secureuri:false,                       //是否启用安全提交,默认为false   
-        fileElementId:'myBlogImage',           //文件选择框的id属性  
-        dataType:'json',                       //服务器返回的格式,可以是json或xml等  
-        success:function(data, status){        //服务器响应成功时的处理函数  
-//             data = data.replace("<PRE>", '');  //ajaxFileUpload会对服务器响应回来的text内容加上<pre>text</pre>前后缀  
-//             data = data.replace("</PRE>", '');  
-//             data = data.replace("<pre>", '');  
-//             data = data.replace("</pre>", ''); //本例中设定上传文件完毕后,服务端会返回给前台[0`filepath]  
-//             if(data.substring(0, 1) == 0){     //0表示上传成功(后跟上传后的文件路径),1表示失败(后跟失败描述)  
-//                 $("img[id='uploadImage']").attr("src", data.substring(2));  
-//                 $('#result').html("图片上传成功<br/>");  
-//             }else{  
-//                 $('#result').html('图片上传失败，请重试！！');  
-//             }  
-			alert("图片上传成功: " + data);
-        },  
-        error:function(data, status, e){ //服务器响应失败时的处理函数  
-//            $('#result').html('图片上传失败，请重试！！');  
-            alert('图片上传失败，请重试！！');  
-        }  
-    });  
-}  
-</script> 
-  </head>  
-  <body>  
-     <form id="addUserInfoForm" action="<%=request.getContextPath()%>/upload/asldf.json" method="post" enctype="multipart/form-data">  
-<%--     <input name="userName"  value="${user.userName}"/>   --%>
-<%--       <input name="userPwd" value="${user.userPwd}"/>   --%>
-<!--       <input type="file" name="file">   -->
-      <input id="myBlogImage" type="file" name="file"> <br/> 
-      <input type="submit"  value="提交"/>  
-      <input type="button" value="Ajax提交" onclick="ajaxFileUpload()"/>  
-      
-    </form>   
-  </body>  
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/ajaxfileupload.js"></script>  
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.ztree.all-3.5.min.js"></script>  
+	<script type="text/javascript">  
+		var setting = {
+			async: {
+				enable: true,
+				url: function(treeId, treeNode) {
+					console.log(treeId);
+					return "<%=request.getContextPath()%>/c/menu/all.json";
+				},
+				dataFilter: filter
+			},
+			view: {expandSpeed:"",
+				addHoverDom: addHoverDom,
+				removeHoverDom: removeHoverDom,
+				selectedMulti: false
+			},
+			edit: {
+				enable: true
+			},
+			data: {
+				simpleData: {
+					enable: true,
+					idKey: "id",
+					pIdKey: "parent",
+					rootPId: 1
+				}
+			},
+			callback: {
+				beforeRemove: beforeRemove,
+				beforeRename: beforeRename,
+				onAsyncSuccess: onAsyncSuccess
+			}
+		};
+		
+		function onAsyncSuccess() {
+			
+		}
+
+		function filter(treeId, parentNode, data) {
+			return data.menuList;
+		}
+		function beforeRemove(treeId, treeNode) {
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			zTree.selectNode(treeNode);
+			return confirm("确认删除 节点 -- " + treeNode.name + " 吗？");
+		}		
+		function beforeRename(treeId, treeNode, newName) {
+			if (newName.length == 0) {
+				alert("节点名称不能为空.");
+				return false;
+			}
+			$.ajax({url: "<%=request.getContextPath()%>/c/menu/rename/" + treeNode.id + "/" + newName+ ".json", 
+				success:function(data){
+				if(data.status === "OK") {
+					console.log(data);
+				} else {
+					alert("rename error!");
+					return false;
+				}
+			}});
+			return true;
+		}
+
+		var newCount = 1;
+		function addHoverDom(treeId, treeNode) {
+			var sObj = $("#" + treeNode.tId + "_span");
+			if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
+			var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
+				+ "' title='add node' onfocus='this.blur();'></span>";
+			sObj.after(addStr);
+			console.log("add   " + "#addBtn_"+treeNode.id);
+			var btn = $("#addBtn_"+treeNode.tId);
+			if (btn) btn.bind("click", function(){
+				var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+				zTree.addNodes(treeNode, {id:(100 + newCount), pId:treeNode.id, name:"new node" + (newCount++)});
+				return false;
+			});
+		};
+		function removeHoverDom(treeId, treeNode) {
+			console.log("remove   " + "#addBtn_"+treeNode.id);
+			$("#addBtn_"+treeNode.tId).unbind().remove();
+		};
+
+		$(document).ready(function(){
+			$.fn.zTree.init($("#tree"), setting);
+		});
+	</script> 
 </html>  

@@ -30,4 +30,5 @@ public interface IMenuService {
 	
 	public void deleteMenu(Menu menu);
 
+	public void rename(Menu menu);
 }

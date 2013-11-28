@@ -127,8 +127,20 @@ public class ConsoleController {
 		return new ModelAndView("add_menu", modelMap);
 	}
 	
-	public Object updateMenu() {
-		return null;
+	@RequestMapping("/menu/rename/{id}/{name}")
+	public ModelAndView renameMenu(@PathVariable("id")int id, @PathVariable("name")String name, ModelMap modelMap) {
+		Menu menu = this.menuService.get(id);
+		try {
+			Assert.notNull(menu);
+			Assert.notNull(name);
+			menu.setName(name);
+			this.menuService.rename(menu);
+			modelMap.put(RETURN_STATUS, "OK");
+		} catch (IllegalArgumentException e) {
+			modelMap.put(RETURN_STATUS, "ERROR");
+			modelMap.put(RETURN_ERROR_MSG, e.getMessage());
+		}
+		return new ModelAndView("rename", modelMap);
 	}
 	
 	
