@@ -37,12 +37,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/ajaxfileupload.js"></script>  
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.ztree.all-3.5.min.js"></script>  
 	<script type="text/javascript">  
+		var demoIframe;
 		var setting = {
 			async: {
 				enable: true,
 				url: function(treeId, treeNode) {
 					console.log(treeId);
-					return "<%=request.getContextPath()%>/c/menu/all.json";
+					return "<%=request.getContextPath()%>/c/menu/Test.json";
 				},
 				dataFilter: filter
 			},
@@ -63,18 +64,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				}
 			},
 			callback: {
+				beforeClick: beforeClick,
 				beforeRemove: beforeRemove,
 				beforeRename: beforeRename,
 				onAsyncSuccess: onAsyncSuccess
 			}
 		};
 		
+		function beforeClick(treeId, treeNode) {
+			var zTree = $.fn.zTree.getZTreeObj("tree");
+			if (treeNode.isParent) {
+				zTree.expandNode(treeNode);
+				return false;
+			} else {
+				if(treeNode.id < 100) {
+					demoIframe.attr("src","c/menuFilm/Test/" + treeNode.id + ".json");
+					return true;
+				}
+			}
+		}
+		
 		function onAsyncSuccess() {
 			
 		}
 
 		function filter(treeId, parentNode, data) {
-			return data.menuList;
+			return data.menuList1;
 		}
 		function beforeRemove(treeId, treeNode) {
 			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
@@ -120,6 +135,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 		$(document).ready(function(){
 			$.fn.zTree.init($("#tree"), setting);
+			demoIframe = $("#testIframe");
+			
 		});
 	</script> 
 </html>  

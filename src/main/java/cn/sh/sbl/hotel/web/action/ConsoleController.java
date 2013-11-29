@@ -9,6 +9,7 @@ package cn.sh.sbl.hotel.web.action;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +31,9 @@ import org.springframework.web.servlet.ModelAndView;
 import cn.sh.sbl.hotel.beans.Film;
 import cn.sh.sbl.hotel.beans.Menu;
 import cn.sh.sbl.hotel.service.IFilmService;
+import cn.sh.sbl.hotel.service.IMenuFilmService;
 import cn.sh.sbl.hotel.service.IMenuService;
+import cn.sh.sbl.hotel.service.impl.MenuFilmService;
 
 /**
  * @author samsung 
@@ -50,8 +53,46 @@ public class ConsoleController {
 	private IMenuService menuService;
 	@Autowired
 	private IFilmService filmService;
-	
+	@Autowired
+	private IMenuFilmService menuFilmService;
 
+
+	@RequestMapping(value={"/menuFilm/Test/{id}"})
+	@Transactional
+	public ModelAndView getFilmsByMenuId(@PathVariable("id")int id, 
+			ModelMap modelMap){
+		List<Film> films = new ArrayList<Film>();
+		films = menuFilmService.findFilmByMenuId(id);
+		modelMap.put("films", films);
+		return new ModelAndView("film", modelMap); 
+	}
+	
+	@RequestMapping(value={"/menu/Test"})
+	@Transactional
+	public ModelAndView getAllMenuTest(ModelMap modelMap) {
+		List<Menu> menuList = new ArrayList<Menu>();
+		menuList = this.menuService.findAll();
+//		String s1 = "{id:100, parent:1, name:\"节目管理\", open:true}";
+//		String s2 = "{id:101, parent:100, name:\"节目添加\", file:\"film/addFilm\"}";
+//		String s3 = "{id:102, parent:100, name:\"节目维护\", file:\"film/maintainFilm\"}";
+//		String s4 = "{id:103, parent:100, name:\"节目查询\", file:\"film/queryFilm\"}";
+		Menu m1 = new Menu();
+		Menu m2 = new Menu();
+		Menu m3 = new Menu();
+		Menu m4 = new Menu();
+		m1.setId(100);m1.setParent(1);m1.setName("节目管理");
+		m2.setId(101);m2.setParent(100);m2.setName("节目添加");
+		m3.setId(102);m3.setParent(100);m3.setName("节目维护");
+		m4.setId(103);m4.setParent(100);m4.setName("节目查询");
+		menuList.add(m1);
+		menuList.add(m2);
+		menuList.add(m3);
+		menuList.add(m4);
+		modelMap.put("menuList1", menuList);
+		return new ModelAndView("menu", modelMap);
+	}
+	
+	
 	/**
 	 * this method will get all menu for the menuTree
 	 * @param modelMap

@@ -427,4 +427,16 @@ public class Menu implements Serializable {
     public void setRemark(String remark) {
         this.remark = remark;
     }
+
+	@Override
+	public String toString() {
+		return "{id:" + id + ", parent:" + parent + ", categoryStyle:"
+				+ categoryStyle + ", name:" + name + ", displayOrder:"
+				+ displayOrder + ", path:" + path + ", hasChild:" + hasChild
+				+ ", valid:" + valid + ", level:" + level + ", icon:" + icon
+				+ ", focusIcon:" + focusIcon + ", lastUpdate:" + lastUpdate
+				+ ", remark:" + remark + "}";
+	}
+    
+    
 }

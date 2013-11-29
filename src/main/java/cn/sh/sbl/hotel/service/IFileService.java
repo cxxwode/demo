@@ -23,5 +23,7 @@ public interface IFileService {
 	public List<File> findAll() ;
 	
 	public List<File> findFileByFilmId(String filmId) ;
+	
+	public void deleteFileByFilmId(String filmId);
 }
 

@@ -50,5 +50,12 @@ public class FileService implements IFileService {
 		return files;
 	}
 	
+	public void deleteFileByFilmId(String filmId){
+		List<File> files = this.findFileByFilmId(filmId);
+		for(File f : files) {
+			fileMapper.deleteByPrimaryKey(f);
+		}
+	}
+	
 }
 
