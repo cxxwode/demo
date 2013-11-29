@@ -32,6 +32,7 @@ import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequ
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import cn.sh.sbl.hotel.beans.FileType;
 import cn.sh.sbl.hotel.web.action.ConsoleController;
 
 /**
@@ -149,4 +150,50 @@ public class ConsoleControllerTest {
 		assertEquals("OK", mr.getModelAndView().getModelMap().get(ConsoleController.RETURN_STATUS));
 		assertEquals(200, mr.getResponse().getStatus());
 	} 
+	
+	@Test
+	public void testFindFilmByMenuId() throws Exception {
+		ResultActions ra = this.mockMvc.perform(MockMvcRequestBuilders
+				.post("/c/menu/films/2.json"));//.accept(MediaType.APPLICATION_XML));
+		MvcResult mr = ra.andReturn();
+		assertEquals("OK", mr.getModelAndView().getModelMap().get(ConsoleController.RETURN_STATUS));
+		assertEquals(200, mr.getResponse().getStatus());
+	}
+	
+	@Test
+	public void testFindAllFilm() throws Exception {
+		ResultActions ra = this.mockMvc.perform(MockMvcRequestBuilders
+				.post("/c/films/all.json"));//.accept(MediaType.APPLICATION_XML));
+		MvcResult mr = ra.andReturn();
+		assertEquals("OK", mr.getModelAndView().getModelMap().get(ConsoleController.RETURN_STATUS));
+		assertEquals(200, mr.getResponse().getStatus());
+	}
+	
+	@Test
+	public void testPublishFilm() throws Exception {
+		ResultActions ra = this.mockMvc.perform(MockMvcRequestBuilders
+				.post("/c/menu/publish/3.json").param("filmId", "FM00000001"));//.accept(MediaType.APPLICATION_XML));
+		MvcResult mr = ra.andReturn();
+		assertEquals("OK", mr.getModelAndView().getModelMap().get(ConsoleController.RETURN_STATUS));
+		assertEquals(200, mr.getResponse().getStatus());
+	}
+	
+	@Test
+//	@Ignore("unimplement")
+	public void testAddFilm() throws Exception {
+		String posterFileName = "FM0000001.jpg";
+		String contentFileName = "icon.png";
+		MockMultipartFile iconFile = new MockMultipartFile(
+				"poster", posterFileName, "application/octet-stream", 
+				new ClassPathResource(posterFileName).getInputStream());
+		MockMultipartFile focusIconFile = new MockMultipartFile(
+				"content", contentFileName, "application/octet-stream", 
+				new ClassPathResource(contentFileName).getInputStream());
+		MockMultipartHttpServletRequestBuilder builder =
+				MockMvcRequestBuilders.fileUpload("/c/film/add.json").file(iconFile).file(focusIconFile);
+		ResultActions ra = this.mockMvc.perform(builder.param("title", "破坏 Sabotage").param("length", "0"));
+		MvcResult mr = ra.andReturn();
+		assertEquals("OK", mr.getModelAndView().getModelMap().get(ConsoleController.RETURN_STATUS));
+		assertEquals(200, mr.getResponse().getStatus());
+	}
 }

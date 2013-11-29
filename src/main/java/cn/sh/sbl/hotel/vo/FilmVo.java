@@ -40,7 +40,7 @@ public class FilmVo {
 	/** 
 	 * The release year of the film.
 	 */
-	private Date releaseYear;
+	private String releaseYear;
 
 	/** 
 	 * The country of the film.
@@ -83,7 +83,7 @@ public class FilmVo {
 	}
 	
 	public FilmVo(String filmId, String country, String description, Date lastUpdate, 
-			short length, String ratings, String title, Date releaseYear) {
+			short length, String ratings, String title, String releaseYear) {
 		this.id = filmId;
 		this.country = country;
 		this.description = description;
@@ -127,11 +127,11 @@ public class FilmVo {
 		this.ratings = ratings;
 	}
 
-	public Date getReleaseYear() {
+	public String getReleaseYear() {
 		return releaseYear;
 	}
 
-	public void setReleaseYear(Date releaseYear) {
+	public void setReleaseYear(String releaseYear) {
 		this.releaseYear = releaseYear;
 	}
 

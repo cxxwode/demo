@@ -9,7 +9,9 @@ package cn.sh.sbl.hotel.service;
 
 import java.util.List;
 
+import cn.sh.sbl.hotel.beans.Category;
 import cn.sh.sbl.hotel.beans.File;
+import cn.sh.sbl.hotel.beans.FileType;
 
 /**
  * @author samsung 
@@ -22,6 +24,9 @@ public interface IFileService {
 	
 	public List<File> findAll() ;
 	
-	public List<File> findFileByFilmId(String filmId) ;
+	public List<File> findFileByFilmId(String filmId);
+	
+	public File findPostFileByFilmId(String filmId);
+	
+	public Category getFileTypeCategoryId(FileType fileType);
 }
-

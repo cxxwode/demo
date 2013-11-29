@@ -87,23 +87,24 @@ public class MenuFilmService implements IMenuFilmService {
 	 * @param films 可以批量添加节目到菜单
 	 */
 	@Transactional(rollbackFor=RuntimeException.class)
-	public void addMenuFilm(Menu menu, List<Film> films) {
+	public void addMenuFilm(int menuId, List<String> filmIds) {
+		Menu menu = this.menuMapper.selectByPrimaryKey(menuId);
 		if(menu.getValid() && !menu.getHasChild()) {
-			for(Film f : films) {
+			for(String f : filmIds) {
 				MenuFilm menuFilm = new MenuFilm();
 				menuFilm.setMenuId(menu.getId());
-				menuFilm.setFilmId(f.getId());
+				menuFilm.setFilmId(f);
 				menuFilm.setLastUpdate(new Date());
-				if(!isMenuFilmExist(menu.getId(), f.getId())) {
+				if(!isMenuFilmExist(menu.getId(), f)) {
 					menuFilmMapper.insert(menuFilm);
-					logger.info("添加节目{{}}到{{}}菜单下成功！",f.getTitle(),menu.getName());
+					logger.info("publish film {{}} into menu {{}} success！", f, menu.getName());
 				} else {
-					logger.debug("添加节目{{}}到{{}}菜单下失败,该节目已经在该菜单下！",f.getTitle(),menu.getName());
+					logger.debug("publish film{{}} into menu{{}} failed, this film is published！", f, menu.getName());
 					continue;
 				}
 			}
 		} else {
-			logger.error("请检查菜单{{}}是否合法或是否为叶子菜单！",menu.getName());
+			logger.error("Please check menu {{}} is valid or not has child menu！",menu.getName());
 		}
 	}
 	

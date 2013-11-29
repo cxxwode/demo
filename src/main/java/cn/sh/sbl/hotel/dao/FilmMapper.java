@@ -117,4 +117,6 @@ public interface FilmMapper {
      * @mbggenerated Tue Nov 26 19:47:14 CST 2013
      */
     int updateByPrimaryKey(Film record);
+    
+    String maxIdByExample(FilmExample example);
 }

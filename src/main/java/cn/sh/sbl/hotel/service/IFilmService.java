@@ -33,5 +33,6 @@ public interface IFilmService {
 	
 	public void deleteFilm(String id);
 	
+	public String getMaxId();
 }
 

@@ -10,7 +10,6 @@ package cn.sh.sbl.hotel.service;
 import java.util.List;
 
 import cn.sh.sbl.hotel.beans.Film;
-import cn.sh.sbl.hotel.beans.Menu;
 import cn.sh.sbl.hotel.beans.MenuFilm;
 import cn.sh.sbl.hotel.beans.MenuFilmKey;
 
@@ -31,7 +30,7 @@ public interface IMenuFilmService {
 	
 	public List<Film> findFilmByMenuId(int menuid);
 	
-	public void addMenuFilm(Menu menu, List<Film> films);
+	public void addMenuFilm(int menuId, List<String> filmIds);
 	
 	public void deleteMenuFilm(MenuFilm menuFilm);
 }
