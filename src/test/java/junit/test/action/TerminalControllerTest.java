@@ -59,6 +59,10 @@ public class TerminalControllerTest {
 		assertEquals(200, mr.getResponse().getStatus());
 	}
 
+	/**
+	 * description : A test for get a menu detail infomation.
+	 * @throws Exception
+	 */
 	@Ignore
 	@Test
 	public void testMenu() throws Exception {
@@ -69,6 +73,10 @@ public class TerminalControllerTest {
 		assertEquals(200, mr.getResponse().getStatus());
 	}
 	
+	/**
+	 * description : A test get Film List by certain MenuId.
+	 * @throws Exception
+	 */
 	@Ignore
 	@Test
 	public void testMenuFilm() throws Exception {

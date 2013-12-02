@@ -58,6 +58,10 @@ public class FilmService implements IFilmService {
 
 	@Transactional(rollbackFor=RuntimeException.class)
 	public void addFilm(Film film, List<File> files) {
+		if (null == film.getId()) {
+			String maxId = this.filmMapper.maxIdByExample(null);
+			film.setId("FM" + String.format("%08d", Integer.valueOf(maxId.substring(2)) + 1));
+		}
 		this.filmMapper.insert(film);
 		for (File file : files) {
 			this.fileMapper.insert(file);
@@ -72,5 +76,8 @@ public class FilmService implements IFilmService {
 		this.filmMapper.deleteByPrimaryKey(id);
 	}
 	
+	public String getMaxId() {
+		return this.filmMapper.maxIdByExample(null);
+	}
 }
 

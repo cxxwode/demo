@@ -34,26 +34,50 @@ public class CategoryVo {
 	 */
 	private String cval;
 
+	/**
+	 * Get id
+	 * @return id
+	 */
 	public Integer getId() {
 		return id;
 	}
 
+	/**
+	 * Set id
+	 * @param id
+	 */
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
+	
+	/**
+	 * Get ckey
+	 * @return ckey
+	 */
 	public String getCkey() {
 		return ckey;
 	}
 
+	/**
+	 * Set ckey
+	 * @param ckey
+	 */
 	public void setCkey(String ckey) {
 		this.ckey = ckey;
 	}
 
+	/**
+	 * Get cval
+	 * @return cval
+	 */
 	public String getCval() {
 		return cval;
 	}
-
+	
+	/**
+	 * Set cval
+	 * @param cval
+	 */
 	public void setCval(String cval) {
 		this.cval = cval;
 	}

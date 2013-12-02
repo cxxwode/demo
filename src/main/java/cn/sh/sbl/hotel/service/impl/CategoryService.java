@@ -29,10 +29,16 @@ public class CategoryService implements ICategoryService {
 	@Autowired
 	private CategoryMapper categoryMapper;
 
+	/**
+	 * @see ICategoryService#findAll()
+	 */
 	public List<Category> findAll() {
 		return this.categoryMapper.selectByExample(null);
 	}
-
+	
+	/**
+	 * @see ICategoryService#findByKey(String)
+	 */
 	public List<Category> findByKey(String key) {
 		CategoryExample example = new CategoryExample();
 		example.createCriteria().andCkeyEqualTo(key);

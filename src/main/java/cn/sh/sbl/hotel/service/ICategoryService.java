@@ -16,11 +16,20 @@ import cn.sh.sbl.hotel.beans.Category;
  * @E-mail: bunco.hb@gmail.com
  * @version 1.0 
  * @date 2013-11-23 下午6:40:09
- * @description TODO
+ * @description the interface of CategoryService
  */
 public interface ICategoryService {
 
+	/**
+	 * Description: Get all the Categories from the Database.
+	 * @return An list of Category.
+	 */
 	public List<Category> findAll();
 	
+	/**
+	 * Description: Get Categories by the properties of key.
+	 * @param key The key of  Category.
+	 * @return  An list of Category.
+	 */
 	public List<Category> findByKey(String key);
 }

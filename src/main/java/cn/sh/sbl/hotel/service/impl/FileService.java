@@ -14,8 +14,13 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cn.sh.sbl.hotel.beans.Category;
+import cn.sh.sbl.hotel.beans.CategoryEnum;
+import cn.sh.sbl.hotel.beans.CategoryExample;
 import cn.sh.sbl.hotel.beans.File;
 import cn.sh.sbl.hotel.beans.FileExample;
+import cn.sh.sbl.hotel.beans.FileType;
+import cn.sh.sbl.hotel.dao.CategoryMapper;
 import cn.sh.sbl.hotel.dao.FileMapper;
 import cn.sh.sbl.hotel.dao.FilmMapper;
 import cn.sh.sbl.hotel.service.IFileService;
@@ -36,11 +41,19 @@ public class FileService implements IFileService {
 	private FileMapper fileMapper;
 	@Autowired
 	private FilmMapper filmMapper;
+	@Autowired
+	private CategoryMapper categoryMapper;
 	
+	/**
+	 * @see IFileService#findAll()
+	 */
 	public List<File> findAll() {
 		return this.fileMapper.selectByExample(null);
 	}
 	
+	/**
+	 * @see IFileService#findFileByFilmId(String)
+	 */
 	public List<File> findFileByFilmId(String filmId) {
 		List<File> files = new ArrayList<File>();
 		FileExample fileExample = new FileExample();
@@ -50,12 +63,43 @@ public class FileService implements IFileService {
 		return files;
 	}
 	
+	/**
+	 * @see IFileService#deleteFileByFilmId(String)
+	 */
 	public void deleteFileByFilmId(String filmId){
 		List<File> files = this.findFileByFilmId(filmId);
 		for(File f : files) {
 			fileMapper.deleteByPrimaryKey(f);
 		}
 	}
+	
+	/**
+	 * @see IFileService#findPostFileByFilmId(String)
+	 */
+	public File findPostFileByFilmId(String filmId) {
+		Category category = getFileTypeCategoryId(FileType.Poster);
+		if(null != category) {
+			List<File> files = findFileByFilmId(filmId);
+			for (File file : files) {
+				if (category.getId().equals(file.getCategoryFilm())) {
+					return file;
+				}
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * @see IFileService#getFileTypeCategoryId(FileType)
+	 */
+	public Category getFileTypeCategoryId(FileType fileType) {
+		CategoryExample example = new CategoryExample();
+		example.createCriteria().andCkeyEqualTo(CategoryEnum.FileType.name())
+				.andCvalEqualTo(fileType.name());
+		List<Category> categories = categoryMapper.selectByExample(example);
+		return categories.size() > 0 ? categories.get(0) : null;
+	}
+	
 	
 }
 

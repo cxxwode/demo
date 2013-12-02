@@ -23,6 +23,7 @@ import cn.sh.sbl.hotel.beans.File;
  */
 @XmlRootElement(name="files")
 public class FileList {
+	
 	private List<File> files;
 
 	public FileList() {

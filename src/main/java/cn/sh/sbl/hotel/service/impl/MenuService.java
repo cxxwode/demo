@@ -27,14 +27,23 @@ public class MenuService implements IMenuService {
 	@Autowired
 	private MenuMapper menuMapper;
 	
+	/**
+	 * @see IMenuService#findAll()
+	 */
 	public List<Menu> findAll() {
 		return this.menuMapper.selectByExample(null);
 	}
 
+	/**
+	 * @see IMenuService#get(int)
+	 */
 	public Menu get(int id) {
 		return this.menuMapper.selectByPrimaryKey(id);
 	}
 	
+	/**
+	 * @see IMenuService#getChildrenById(int)
+	 */
 	public List<Menu> getChildrenById(int id){
 		MenuExample example = new MenuExample();
 		example.createCriteria().andParentEqualTo(id)
@@ -52,11 +61,11 @@ public class MenuService implements IMenuService {
 			menuMapper.updateByPrimaryKey(parentMenu);
 		}
 	}
-
+	
+	/**
+	 * @see IMenuService#deleteMenu(Menu)
+	 */
 	public void deleteMenu(Menu menu) {
-		//TODO 判断父菜单的状态更新
-		//TODO 判断是否含节目
-		//TODO 菜单栏目图标删除
 		
 		menuMapper.deleteByPrimaryKey(menu.getId());
 		
@@ -75,6 +84,9 @@ public class MenuService implements IMenuService {
 		
 	}
 	
+	/**
+	 * @see IMenuService#rename(Menu)
+	 */
 	public void rename(Menu menu) {
 		logger.debug("new Name: {}", menu.getName());
 		this.menuMapper.updateByPrimaryKey(menu);
